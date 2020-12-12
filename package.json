@@ -1,0 +1,15 @@
+{
+  "name": "trello-to-do-infographics",
+  "version": "1.0.0",
+  "description": "simple infographic project for my trello using",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Kolesov Ivan",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "4.17.1"
+  }
+}
