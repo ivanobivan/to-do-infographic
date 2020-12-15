@@ -22,17 +22,16 @@ window.TrelloPowerUp.initialize({
         ];
     },
     'board-buttons': function (t, opts) {
-        debugger
-        t.board("all")
-            .then(function (boardData) {
-                console.log(boardData);
-                return [
+        t.lists("all")
+            .then(function (listData) {
+                console.log(listData);
+                /* return [
                     {
                         text: 'infographic',
                         condition: 'always',
                         callback: showInfographic
                     }
-                ]
+                ] */
             })
 
     }
