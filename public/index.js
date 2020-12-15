@@ -7,9 +7,10 @@ function showInfographic() {
 window.TrelloPowerUp.initialize({
     "card-badges": function (t, opts) {
         return t.card("name")
-            .get("name")
-            .then(function (cardName) {
-                console.log(cardName);
+            .then(function () {
+                if (opts.attachments.addedData) {
+                    return [];
+                }
                 opts.attachments.addedData = currentData;
                 return [
                     {
@@ -32,8 +33,9 @@ window.TrelloPowerUp.initialize({
 });
 
 var t = window.TrelloPowerUp.iframe();
-t.lists("all")
+return t.lists("all")
     .then(function (lists) {
         console.log(lists);
         listData = lists;
     });
+//lists.map(list => list.cards.map(card => card.attachments.addedData))
