@@ -21,21 +21,20 @@ window.TrelloPowerUp.initialize({
             });
     },
     'board-buttons': function (t, opts) {
-        return [
-            {
-                text: 'infographic',
-                condition: 'always',
-                callback: showInfographic
-            }
-        ]
-
+        return t.lists("all")
+            .then(function (lists) {
+                console.log(lists);
+                listData = lists;
+                return [
+                    {
+                        text: 'infographic',
+                        condition: 'always',
+                        callback: showInfographic
+                    }
+                ]
+            });
     }
 });
 
-var t = window.TrelloPowerUp.iframe();
-return t.lists("all")
-    .then(function (lists) {
-        console.log(lists);
-        listData = lists;
-    });
+
 //lists.map(list => list.cards.map(card => card.attachments.addedData))
