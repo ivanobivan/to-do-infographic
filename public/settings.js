@@ -1,8 +1,7 @@
 const t = window.TrelloPowerUp.iframe();
 
-const settingElement = document.getElementById("settings");
-
 t.render(function () {
+    const settingElement = document.getElementById("settings");
     return t.lists("all")
         .then(function (lists) {
             lists.forEach(list => {

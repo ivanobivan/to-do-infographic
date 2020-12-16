@@ -7,7 +7,7 @@ function showInfographic(t, options) {
                 args: {
                     lists: lists
                 },
-                accentColor: 'lightblue',
+                accentColor: 'white',
                 fullscreen: true,
                 callback: () => t.closeModal(),
                 title: 'Infographic'
