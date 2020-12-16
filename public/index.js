@@ -30,8 +30,9 @@ window.TrelloPowerUp.initialize({
             title: 'settings',
             url: './settings.html',
             height: 300 // we can always resize later, but if we know the size in advance, its good to tell Trello
-          });
-    });
+        });
+    }
+});
 
 //нужно передеать имена списков, которые должны попасть в инфорграфику
 //диапазон времени надо вывести прямо в html теле модального окна и навесить туда кнопку
