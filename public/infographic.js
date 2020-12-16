@@ -1,12 +1,9 @@
 const t = window.TrelloPowerUp.iframe();
 
-const text = t.arg("text");
 const lists = t.arg("lists");
 
-console.log(text);
-
 t.render(function() {
-    debugger
+    console.log(lists);
 });
 
 document.addEventListener('click', function (e) {
