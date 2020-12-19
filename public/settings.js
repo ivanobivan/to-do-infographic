@@ -11,6 +11,7 @@ const t = window.TrelloPowerUp.iframe();
  * @param {ClickEvent} event
  */
 function save(event) {
+    debugger
     const form = document.getElementById("settings");
 
     const formElements = form.elements;
@@ -23,7 +24,9 @@ function save(event) {
 
     for (let i = 0; i < formElements.length; i++) {
         const input = formElements[i];
-        if (input.name === "startDate") {
+        if (input.type === "submit") {
+            continue;
+        } else if (input.name === "startDate") {
             settings.startDate = input.value;
         } else if (input.name === "endDate") {
             settings.endDate = input.value;
@@ -49,7 +52,6 @@ function save(event) {
  */
 function renderSettings(placeHolder, list) {
     list.forEach(element => {
-        const listCheckboxDiv = document.createElement("div");
 
         const checkboxLabel = document.createElement("label");
         checkboxLabel.textContent = element.name;
@@ -62,18 +64,18 @@ function renderSettings(placeHolder, list) {
 
         checkboxLabel.appendChild(checkboxInput);
 
-        listCheckboxDiv.appendChild(checkboxLabel);
-
-        placeHolder.appendChild(listCheckboxDiv);
+        placeHolder.appendChild(checkboxLabel);
     });
 
     //set end date settings as current Date
     const endDate = document.getElementById("endDate");
     endDate.value = new Date().toISOString().slice(0, 10);
+
+    //add save settings handler
+    placeHolder.addEventListener("submit", save);
 };
 
 t.render(function () {
-    debugger
     //get main element from settings.html
     const settingDiv = document.getElementById("settings");
 

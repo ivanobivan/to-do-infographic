@@ -1,4 +1,12 @@
 #settings {
     display: flex;
-    flex-direction: colimn;
+    flex-direction: column;
+}
+
+#settings button[type="submit"] {
+    order: 100;
+}
+
+#settings input[type="checkbox"] {
+    float: left;
 }
