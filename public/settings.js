@@ -80,7 +80,7 @@ function prepareSettingsElement() {
     settingListDiv.innerHTML = "";
 
     //set end date settings as current Date
-    const endDate = settingDiv.getElementById("endDate");
+    const endDate = document.getElementById("endDate");
     endDate.value = new Date().toISOString().slice(0, 10);
 
     settingDiv.removeEventListener("submit", save);
