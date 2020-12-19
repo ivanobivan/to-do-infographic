@@ -7,6 +7,12 @@
     order: 100;
 }
 
-#settings input[type="checkbox"] {
+
+#settings #settings_list {
+    display: flex;
+    flex-direction: column;
+}
+
+#settings #settings_list input[type="checkbox"] {
     float: left;
 }

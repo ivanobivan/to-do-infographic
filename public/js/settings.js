@@ -84,12 +84,11 @@ function prepareSettingsElement() {
     endDate.value = new Date().toISOString().slice(0, 10);
 
     settingDiv.removeEventListener("submit", save);
-    
     settingDiv.addEventListener("submit", save);
 }
 
 t.render(function () {
-    debugger
+    
     prepareSettingsElement();
 
     const settingListDiv = document.getElementById("settings_list");
