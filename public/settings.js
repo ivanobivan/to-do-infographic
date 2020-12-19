@@ -74,7 +74,7 @@ function renderSettings(placeHolder, list) {
 function prepareSettingsElement() {
     const settingDiv = document.getElementById("settings");
     
-    const settingListDiv = settingDiv.getElementById("list");
+    const settingListDiv = document.getElementById("settings_list");
 
     //event submit (mean save settings) pulls event rerender cos I should clean element list 
     settingListDiv.innerHTML = "";
@@ -92,7 +92,7 @@ t.render(function () {
     debugger
     prepareSettingsElement();
 
-    const settingListDiv = placeHolder.getElementById("list");
+    const settingListDiv = document.getElementById("settings_list");
     //get settings
     return t.get("board", "private", SETTINGS_KEY)
         .then(function (settings) {
