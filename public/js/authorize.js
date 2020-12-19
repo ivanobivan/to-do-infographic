@@ -14,7 +14,7 @@ const requestParameters = [
     ["name", "to-do-infographic"],
     ["scope", "read"],
     ["key", apiKey],
-    ["callback_method", "postMessage"],
+    ["callback_method", "fragment"],
     ["response_type", "token"]
 ];
 
@@ -30,12 +30,12 @@ for (let i = 0; i < requestParameters.length; i++) {
 
 const trelloAuthUrl = `${baseUrl}?${parametersAsString}`;
 
-function validateToken(token) {
+const validateToken = function (token) {
     return /^[0-9a-f]{64}$/.test(token);
 }
 
 function authorize() {
-    t.authorize(trelloAuthUrl, { height: 100, width: 200, validToken: validateToken })
+    t.authorize(trelloAuthUrl, { height: 680, width: 580, validToken: validateToken })
         .then(function (token) {
             return t.storeSecret(PRIVATE_TOKEN_PATH, token);
         })
@@ -44,7 +44,7 @@ function authorize() {
         });
 }
 
-t.render(function() {
+t.render(function () {
     const button = document.getElementById('authorize_button')
     button.addEventListener('click', authorize);
 })
