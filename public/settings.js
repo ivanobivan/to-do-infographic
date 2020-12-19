@@ -39,7 +39,10 @@ function save(event) {
         }
     };
 
-    t.set("board", "private", SETTINGS_KEY, settings);
+    t.set("board", "private", SETTINGS_KEY, settings)
+        .then(function(res) {
+            return false;
+        });
 
     event.preventDefault();
 }
