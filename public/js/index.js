@@ -35,6 +35,15 @@ window.TrelloPowerUp.initialize({
                 return t.clearSecret(PRIVATE_TOKEN_PATH);
             });
     },
+    'authorization-status': function (t, options) {
+        return t.loadSecret(PRIVATE_TOKEN_PATH)
+            .then(function (token) {
+                if (token) {
+                    return { authorized: true };
+                }
+                return { authorized: false };
+            });
+    },
     'show-authorization': function (t, options) {
         return t.popup({
             title: 'Authorization',
