@@ -27,7 +27,7 @@ function save(event) {
             settings.startDate = input.value;
         } else if (input.name === "endDate") {
             settings.endDate = input.value;
-        }else {
+        } else {
             settings.list.push({
                 id: input.id,
                 checked: input.checked,
@@ -36,7 +36,7 @@ function save(event) {
         }
     };
 
-    t.set("board", "private", SETTINGS_KEY, settings);        
+    t.set("board", "private", SETTINGS_KEY, settings);
 
     event.preventDefault();
 }
@@ -64,19 +64,12 @@ function renderSettings(placeHolder, list) {
 
         listCheckboxDiv.appendChild(checkboxLabel);
 
-        const saveButton = document.createElement("button");
-        saveButton.type = "submit";
-        saveButton.textContent = "OK";
-        saveButton.onsubmit = save;
-
         placeHolder.appendChild(listCheckboxDiv);
+    });
 
-        //set end date settings as current Date
-        const endDate = document.getElementById("endDate");
-        endDate.value = new Date().toISOString().slice(0, 10);
-
-        placeHolder.appendChild(saveButton);
-    })
+    //set end date settings as current Date
+    const endDate = document.getElementById("endDate");
+    endDate.value = new Date().toISOString().slice(0, 10);
 };
 
 t.render(function () {
