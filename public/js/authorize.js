@@ -34,7 +34,7 @@ function validateToken(token) {
     return /^[0-9a-f]{64}$/.test(token);
 }
 
-document.getElementById('authorize_button').addEventListener('click', function () {
+function authorize() {
     t.authorize(trelloAuthUrl, { height: 100, width: 200, validToken: validateToken })
         .then(function (token) {
             return t.storeSecret(PRIVATE_TOKEN_PATH, token);
@@ -42,4 +42,10 @@ document.getElementById('authorize_button').addEventListener('click', function (
         .then(function () {
             return t.closePopup();
         });
+}
+
+t.render().then(function () {
+    const button = document.getElementById('authorize_button')
+    button.addEventListener('click', authorize);
 });
+
