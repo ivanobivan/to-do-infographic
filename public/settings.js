@@ -67,7 +67,7 @@ function renderSettings(placeHolder, list) {
         const saveButton = document.createElement("button");
         saveButton.type = "submit";
         saveButton.textContent = "OK";
-        saveButton.onsubmit = save();
+        saveButton.onsubmit = save;
 
         placeHolder.appendChild(listCheckboxDiv);
 
