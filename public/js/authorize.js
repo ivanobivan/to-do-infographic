@@ -13,7 +13,7 @@ const requestParameters = [
     ["expiration", "never"],
     ["name", "to-do-infographic"],
     ["scope", "read"],
-    ["key", "apiKey"],
+    ["key", apiKey],
     ["callback_method", "postMessage"],
     ["response_type", "token"]
 ];
@@ -45,7 +45,6 @@ function authorize() {
 }
 
 t.render(function() {
-    debugger
     const button = document.getElementById('authorize_button')
     button.addEventListener('click', authorize);
 })
