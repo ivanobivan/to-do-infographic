@@ -44,8 +44,9 @@ function authorize() {
         });
 }
 
-t.render().then(function () {
+t.render(function() {
+    debugger
     const button = document.getElementById('authorize_button')
     button.addEventListener('click', authorize);
-});
+})
 
