@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="./public/settings.css"/>
-  </head>
-  <body>
-    <script src="https://p.trellocdn.com/power-up.min.js" crossorigin="anonymous"></script>
-    <script src="./public/settings.js"></script>
-    <div id="settings"></div>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="./public/settings.css" />
+</head>
+
+<body>
+  <script src="https://p.trellocdn.com/power-up.min.js" crossorigin="anonymous"></script>
+  <script src="./public/settings.js"></script>
+  <form id="settings">
+    <label>
+      Date of start: 
+      <input type="date" id="startDate" name="startDate" min="1970-01-01" value="1970-01-01" />
+    </label>
+    
+    <label>
+      Date of end:
+      <input type="date" id="endDate" name="endDate" min="1970-01-01" />
+    </label>
+
+  </form>
+</body>
+
 </html>
