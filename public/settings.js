@@ -11,7 +11,7 @@ const t = window.TrelloPowerUp.iframe();
  * @param {ClickEvent} event
  */
 function save(event) {
-    debugger
+    
     const form = document.getElementById("settings");
 
     const formElements = form.elements;
@@ -39,10 +39,7 @@ function save(event) {
         }
     };
 
-    t.set("board", "private", SETTINGS_KEY, settings)
-        .then(function(res) {
-            return false;
-        });
+    t.set("board", "private", SETTINGS_KEY, settings);
 
     event.preventDefault();
 }
@@ -69,31 +66,45 @@ function renderSettings(placeHolder, list) {
 
         placeHolder.appendChild(checkboxLabel);
     });
-
-    //set end date settings as current Date
-    const endDate = document.getElementById("endDate");
-    endDate.value = new Date().toISOString().slice(0, 10);
-
-    //add save settings handler
-    placeHolder.addEventListener("submit", save);
 };
 
-t.render(function () {
-    //get main element from settings.html
+/* 
+ * clean list element, set default end date value and resubscribe submit event
+ */
+function prepareSettingsElement() {
     const settingDiv = document.getElementById("settings");
+    
+    const settingListDiv = settingDiv.getElementById("list");
 
+    //event submit (mean save settings) pulls event rerender cos I should clean element list 
+    settingListDiv.innerHTML = "";
+
+    //set end date settings as current Date
+    const endDate = settingDiv.getElementById("endDate");
+    endDate.value = new Date().toISOString().slice(0, 10);
+
+    settingDiv.removeEventListener("submit", save);
+    
+    settingDiv.addEventListener("submit", save);
+}
+
+t.render(function () {
+    debugger
+    prepareSettingsElement();
+
+    const settingListDiv = placeHolder.getElementById("list");
     //get settings
     return t.get("board", "private", SETTINGS_KEY)
         .then(function (settings) {
 
             //user already define custom settings
             if (settings) {
-                return renderSettings(settingDiv, settings.list);
+                return renderSettings(settingListDiv, settings.list);
             } else {
                 //settings doesn't extst, so, define new one
                 return t.lists("id", "name")
                     .then(function (list) {
-                        return renderSettings(settingDiv, list);
+                        return renderSettings(settingListDiv, list);
                     });
             }
         })
