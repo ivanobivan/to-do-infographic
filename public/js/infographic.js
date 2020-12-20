@@ -12,13 +12,18 @@ function stub(message) {
 }
 
 function renderInfographic(token, settings) {
-    debugger
     settings.list.forEach(element => {
         if (element.checked) {
             const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
-            fetch(requestUrl)
+            fetch(requestUrl, { method: "GET" })
+                .then(function (res) {
+                    return res.json();
+                })
                 .then(function (cardList) {
-                    debugger
+                    debugger;
+                })
+                .catch(function(err) {
+                    debugger;
                 })
         }
     });
