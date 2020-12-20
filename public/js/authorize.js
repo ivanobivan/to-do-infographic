@@ -12,7 +12,8 @@ const requestParameters = [
     ["name", "to-do-infographic"],
     ["scope", "read"],
     ["key", apiKey],
-    ["callback_method", "postMessage"],
+    ["callback_method", "fragment"],
+    ["return_url", `${window.location.origin}%2Fauth-result.html`]
     ["response_type", "token"]
 ];
 
@@ -47,10 +48,4 @@ t.render(function () {
     const button = document.getElementById('authorize_button')
     button.addEventListener('click', authorize);
 });
-
-window.addEventListener("message", (event) => {
-    debugger
-    const token = event.data;
-    
-}, false);
 
