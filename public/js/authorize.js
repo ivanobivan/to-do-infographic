@@ -34,10 +34,10 @@ const validateToken = function (token) {
     return /^[0-9a-f]{64}$/.test(token);
 }
 
-const storageHandler = function (evt) {
+const storageHandler = function (event) {
     debugger
-    if (evt.key === 'token' && evt.newValue) {
-        authorizeWindow.close();
+    if (event.key === PRIVATE_TOKEN_PATH && event.newValue && validToken(event.newValue)) {
+        t.storeSecret(PRIVATE_TOKEN_PATH, event.key);
         window.removeEventListener('storage', storageHandler);
     }
 }

@@ -6,4 +6,4 @@ let key = "token";
 
 localStorage.setItem(PRIVATE_TOKEN_PATH, token);
 
-//setTimeout(function () { window.close(); }, 1000);
+setTimeout(function () { window.close(); }, 10000);
