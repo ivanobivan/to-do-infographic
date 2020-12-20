@@ -13,8 +13,7 @@ const requestParameters = [
     ["scope", "read"],
     ["key", apiKey],
     ["callback_method", "fragment"],
-    ["return_url", `${window.location.origin}/auth-result.html`],
-    ["response_type", "token"]
+    ["return_url", `${window.location.origin}/auth-result.html`]
 ];
 
 let parametersAsString = "";
