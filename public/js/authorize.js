@@ -37,7 +37,7 @@ const validateToken = function (token) {
 const storageHandler = function (event) {
     debugger
     if (event.key === PRIVATE_TOKEN_PATH && event.newValue && validToken(event.newValue)) {
-        t.storeSecret(PRIVATE_TOKEN_PATH, event.key);
+        //t.storeSecret(PRIVATE_TOKEN_PATH, event.newValue);
         window.removeEventListener('storage', storageHandler);
     }
 }
