@@ -53,7 +53,5 @@ function authorize() {
         });
 }
 
-t.render(function () {
-    const button = document.getElementById('authorize_button')
-    button.addEventListener('click', authorize);
-});
+const button = document.getElementById('authorize_button')
+button.addEventListener('click', authorize);
