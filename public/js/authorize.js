@@ -15,7 +15,7 @@ let requestParameters = [
     ["scope", "read"],
     ["key", apiKey],
     ["callback_method", "fragment"],
-    ["response_url", `${window.location.origin}/auth-result.html`]
+    ["response_url", `${window.location.origin}%2Fauth-result.html`]
 ];
 
 
