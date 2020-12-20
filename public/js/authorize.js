@@ -6,14 +6,15 @@ const t = TrelloPowerUp.iframe();
 
 const apiKey = t.arg('apiKey');
 
+
 const baseUrl = "https://trello.com/1/authorize";
 const requestParameters = [
     ["expiration", "never"],
     ["name", "to-do-infographic"],
     ["scope", "read"],
     ["key", apiKey],
-    ["callback_method", "fragment"],
-    ["return_url", `${window.location.origin}/auth-result.html`]
+    ["callback_method", "postMessage"],
+    ["response_type", "token"]
 ];
 
 let parametersAsString = "";
@@ -33,7 +34,18 @@ const validateToken = function (token) {
 }
 
 function authorize() {
-    t.authorize(trelloAuthUrl, { height: 680, width: 580, validToken: validateToken })
+    t.authorize(
+        trelloAuthUrl,
+        {
+            height: 680,
+            width: 580,
+            validToken: validateToken,
+            windowCallback: function (authorizeWindow) {
+                debugger
+                window.addEventListener('storage', storageHandler);
+            }
+        },
+    )
         .then(function (token) {
             debugger
             return t.storeSecret(PRIVATE_TOKEN_PATH, token);
@@ -47,4 +59,3 @@ t.render(function () {
     const button = document.getElementById('authorize_button')
     button.addEventListener('click', authorize);
 });
-
