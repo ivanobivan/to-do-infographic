@@ -13,7 +13,7 @@ const requestParameters = [
     ["scope", "read"],
     ["key", apiKey],
     ["callback_method", "fragment"],
-    ["return_url", `${window.location.origin}%2Fauth-result.html`]
+    ["return_url", `${window.location.origin}%2Fauth-result.html`],
     ["response_type", "token"]
 ];
 
