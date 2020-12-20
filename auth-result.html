@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-  </head>
-  <body>
+</head>
+
+<body>
     <script src="https://p.trellocdn.com/power-up.min.js" crossorigin="anonymous"></script>
-    <script src="./public/js/auth-result.js"></script>
-  </body>
+    <script>
+        debugger
+        const token = window.location.hash.substring(7);
+        
+        let PRIVATE_TOKEN_PATH = "PRIVATE_TOKEN_PATH";
+        let key = "token";
+
+        localStorage.setItem(PRIVATE_TOKEN_PATH, token);
+
+        //setTimeout(function () { window.close(); }, 10000);
+    </script>
+</body>
+
 </html>
