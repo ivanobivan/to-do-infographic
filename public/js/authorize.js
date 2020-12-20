@@ -34,13 +34,24 @@ const validateToken = function (token) {
     return /^[0-9a-f]{64}$/.test(token);
 }
 
+const storageHandler = function (evt) {
+    debugger
+    if (evt.key === 'token' && evt.newValue) {
+        authorizeWindow.close();
+        window.removeEventListener('storage', storageHandler);
+    }
+}
+
 function authorize() {
     t.authorize(
         trelloAuthUrl,
         {
             height: 680,
             width: 580,
-            validToken: validateToken
+            validToken: validateToken,
+            windowCallback: function (authorizeWindow) {
+                window.addEventListener('storage', storageHandler);
+            }
         }
     )
         .then(function (token) {
@@ -48,6 +59,7 @@ function authorize() {
             return t.storeSecret(PRIVATE_TOKEN_PATH, token);
         })
         .then(function () {
+            debugger
             return t.closePopup();
         });
 }
