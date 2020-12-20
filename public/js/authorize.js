@@ -8,14 +8,16 @@ const apiKey = t.arg('apiKey');
 
 
 const baseUrl = "https://trello.com/1/authorize";
-const requestParameters = [
+
+let requestParameters = [
     ["expiration", "never"],
     ["name", "to-do-infographic"],
     ["scope", "read"],
     ["key", apiKey],
-    ["callback_method", "postMessage"],
-    ["response_type", "token"]
+    ["callback_method", "fragment"],
+    ["response_url", `${window.location.origin}/auth-result.html`]
 ];
+
 
 let parametersAsString = "";
 
@@ -33,26 +35,14 @@ const validateToken = function (token) {
     return /^[0-9a-f]{64}$/.test(token);
 }
 
-const storageHandler = function (evt) {
-    debugger
-    if (evt.key === 'token' && evt.newValue) {
-        authorizeWindow.close();
-        window.removeEventListener('storage', storageHandler);
-    }
-}
-
 function authorize() {
     t.authorize(
         trelloAuthUrl,
         {
             height: 680,
             width: 580,
-            validToken: validateToken,
-            windowCallback: function (authorizeWindow) {
-                debugger
-                window.addEventListener('storage', storageHandler);
-            }
-        },
+            validToken: validateToken
+        }
     )
         .then(function (token) {
             debugger
