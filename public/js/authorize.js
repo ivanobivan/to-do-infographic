@@ -33,6 +33,14 @@ const validateToken = function (token) {
     return /^[0-9a-f]{64}$/.test(token);
 }
 
+const storageHandler = function (evt) {
+    debugger
+    if (evt.key === 'token' && evt.newValue) {
+        authorizeWindow.close();
+        window.removeEventListener('storage', storageHandler);
+    }
+}
+
 function authorize() {
     t.authorize(
         trelloAuthUrl,
