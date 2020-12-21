@@ -1,0 +1,74 @@
+:root {
+    --grid-border: 1px dotted rgba(0,0,0,0.2);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#infographic {
+    display: grid;
+    grid-template-rows: 30px 1fr 30px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "header header header"
+        "content content content"
+        "footer footer footer";
+    grid-gap: 0.1vw;
+    height: 100vh;
+    margin: 0;
+}
+
+#infographic > header, #infographic > footer {
+    background-color: lightgrey;
+}
+
+#infographic > header {
+    grid-area: header;
+    text-align: center;
+}
+
+#infographic > footer {
+    grid-area: footer;
+}
+
+#infographic .infographic-measure {
+    grid-area: content;
+    display: grid;
+    grid-template-columns: 0.5fr repeat(3, 1fr) 0.5fr;
+    grid-template-rows: repeat(10, 1fr);
+}
+
+#infographic .infographic-measure > div {
+    display: inline;
+    font-size: 1vw;
+    padding: 0.1em;
+    text-align: center;
+    border-bottom: var(--grid-border);
+    border-right: var(--grid-border);
+    border-left: var(--grid-border);
+}
+
+#infographic .infographic-measure .linear {
+    align-self: end;
+    border-right: none;
+    text-align: right;
+    padding-right: 10px;
+}
+
+#infographic .infographic-measure .list.green {
+    background-color: limegreen;
+}
+
+#infographic .infographic-measure .list.red {
+    background-color: pink;
+}
+
+#infographic .infographic-measure .explain {
+    grid-row-start: 1;
+    grid-row-end: 11;
+    grid-column-start: 5;
+    grid-column-end: 6;
+    border: none;
+}   
