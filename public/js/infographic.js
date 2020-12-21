@@ -195,7 +195,8 @@ function getDataForInfographic(token, settings) {
         //filtered and prepared cards for grid building
         const resultForRender = [];
 
-        settings.list.forEach(element => {
+        for (let i = 0; i < settings.list.length; i++) {
+            const element = settings.list[i];
             if (element.checked) {
                 headers.push(element.name);
                 const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
@@ -214,13 +215,15 @@ function getDataForInfographic(token, settings) {
                         reject(err);
                     })
             }
-        });
-
-        resolve({
-            headers,
-            body: resultForRender,
-            max: MAX_CARD_COUNT
-        });
+            //move to Promise.all
+            if (i + 1 === settings.list.length) {
+                resolve({
+                    headers,
+                    body: resultForRender,
+                    max: MAX_CARD_COUNT
+                });
+            }
+        }
     });
 }
 
