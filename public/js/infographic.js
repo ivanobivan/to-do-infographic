@@ -192,7 +192,7 @@ function getDataForInfographic(token, settings) {
     const headers = ["scale"];
 
     return Promise.all(
-        settings.list.forEach(element => {
+        settings.list.map(element => {
             return new Promise((resolve, reject) => {
                 if (element.checked) {
                     headers.push(element.name);
