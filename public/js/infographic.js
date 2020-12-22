@@ -185,44 +185,41 @@ function filterData(cardList, startDate, endDate) {
 
 function getDataForInfographic(token, settings) {
     stub("loading...");
-    return new Promise((resolve, reject) => {
-        //what max card count it could get from all lists
-        let MAX_CARD_COUNT = 0;
 
-        //list with trello-list names, for grid first element is scale whenever
-        const headers = ["scale"];
+    //what max card count it could get from all lists
+    let MAX_CARD_COUNT = 0;
 
-        //filtered and prepared cards for grid building
-        const resultForRender = [];
+    //list with trello-list names, for grid first element is scale whenever
+    const headers = ["scale"];
 
-        for (let i = 0; i < settings.list.length; i++) {
-            const element = settings.list[i];
-            if (element.checked) {
-                headers.push(element.name);
-                const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
-                fetch(requestUrl, { method: "GET" })
-                    .then(function (res) {
-                        return res.json();
-                    })
-                    .then(function (cardList) {
-                        const filteredList = filterData(cardList, settings.startDate, settings.endDate);
-                        if (filteredList.length > MAX_CARD_COUNT) {
-                            MAX_CARD_COUNT = filteredList.length;
-                        }
-                        resultForRender.push(filteredList);
-                    })
-                    .catch(function (err) {
-                        reject(err);
-                    })
-            }
-            //move to Promise.all
-            if (i + 1 === settings.list.length) {
-                resolve({
-                    headers,
-                    body: resultForRender,
-                    max: MAX_CARD_COUNT
-                });
-            }
+    return Promise.all(
+        settings.list.forEach(element => {
+            return new Promise((resolve, reject) => {
+                if (element.checked) {
+                    headers.push(element.name);
+                    const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
+                    fetch(requestUrl, { method: "GET" })
+                        .then(function (res) {
+                            return res.json();
+                        })
+                        .then(function (cardList) {
+                            const filteredList = filterData(cardList, settings.startDate, settings.endDate);
+                            if (filteredList.length > MAX_CARD_COUNT) {
+                                MAX_CARD_COUNT = filteredList.length;
+                            }
+                            resolve(filteredList);
+                        })
+                        .catch(function (err) {
+                            reject(err);
+                        })
+                }
+            });
+        })
+    ).then(result => {
+        return {
+            headers,
+            body: result,
+            max: MAX_CARD_COUNT
         }
     });
 }
