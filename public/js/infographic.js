@@ -164,14 +164,6 @@ function filterData(cardList, startDate, endDate) {
             }
             return true;
         })
-        .map(card => {
-            return {
-                id: card.id,
-                date: getTimeMS(trimISODate(card.dateLastActivity)),
-                name: card.name,
-                closed: card.closed
-            }
-        })
         .sort((a, b) => {
             if (a.closed && b.closed || !a.closed && !b.closed) {
                 return a.date - b.date;
@@ -179,8 +171,15 @@ function filterData(cardList, startDate, endDate) {
                 return 1;
             }
             return -1;
-        })
-    return cardList;
+        });
+    return cardList.map(card => {
+        return {
+            id: card.id,
+            date: getTimeMS(trimISODate(card.dateLastActivity)),
+            name: card.name,
+            closed: card.closed
+        }
+    })
 }
 
 function getDataForInfographic(token, settings) {
