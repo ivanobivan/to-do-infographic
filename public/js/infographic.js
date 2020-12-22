@@ -147,8 +147,8 @@ function trimISODate(dateString) {
 }
 
 function filterData(cardList, startDate, endDate) {
-    const startTimeMS = getTimeMS(startTimeMS);
-    const endTimeMS = getTimeMS(endTimeMS);
+    const startTimeMS = getTimeMS(startDate);
+    const endTimeMS = getTimeMS(endDate);
     cardList
         .filter(card => {
             if (!card.closed) {
