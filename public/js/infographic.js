@@ -88,10 +88,8 @@ function buildDomTree(data) {
     }
 
     body.forEach(list => {
-        if (list.length < bodyList.length) {
-            for (let j = 0; j < bodyList.length - list.length; j++) {
-                list.unshift(null);
-            }
+        while (list.length < bodyList.length) {
+            list.unshift(null);
         }
         for (let i = 0; i < bodyList.length; i++) {
             const element = list[i];
@@ -127,7 +125,7 @@ function render(grid) {
     const infographicMeasure = document.createElement("div");
     infographicMeasure.className = "infographic-measure";
 
-    grid.forEach(e => infographicMeasure.appendChild(e));
+    grid.forEach(list => list.forEach(e => infographicMeasure.appendChild(e)));
 
     const explain = document.createElement("div");
     explain.className = "explain";
