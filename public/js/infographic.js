@@ -20,7 +20,9 @@ function clean() {
 function createLinearDiv(innerText) {
     const linearDiv = document.createElement("div");
     linearDiv.className = "linear";
-    linearDiv.innerText = innerText;
+    if (innerText) {
+        linearDiv.innerText = innerText;
+    }
     return linearDiv;
 }
 
@@ -52,9 +54,9 @@ function buildDomTree(data) {
     const OFFSET = 5;
 
     for (let i = 0; i < OFFSET; i++) {
-        const divList = new Array(body.length + 1);
-        divList.push(createLinearDiv());
-        divList.fill(createListDiv(), 1);
+        const divList = new Array(body.length);
+        divList.fill(createListDiv());
+        divList.unshift(createLinearDiv());
         grid.push(divList);
     }
 
@@ -73,7 +75,7 @@ function buildDomTree(data) {
     const bodyList = new Array(max);
 
     /* 
-        what we'll get next
+        what we'll get next in bodyList
     [
         [4], 
         [3], 
@@ -82,7 +84,7 @@ function buildDomTree(data) {
         [0]
     ] */
     for (let i = 1; i <= max; i++) {
-        bodyList[i] = [createLinearDiv(max - i)];
+        bodyList[i - 1] = [createLinearDiv(max - i)];
     }
 
     body.forEach(list => {
@@ -95,9 +97,9 @@ function buildDomTree(data) {
             const element = list[i];
             if (element) {
                 if (element.closed) {
-                    bodyList[i].push("green");
+                    bodyList[i].push(createListDiv("green"));
                 } else {
-                    bodyList[i].push("red");
+                    bodyList[i].push(createListDiv("red"));
                 }
             } else {
                 bodyList[i].push(createListDiv());
@@ -113,7 +115,7 @@ function buildDomTree(data) {
         [0, elem, elem, elem], 
     */
 
-    grid.push(bodyList);
+    grid.push(...bodyList);
     render(grid);
 }
 
