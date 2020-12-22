@@ -11,7 +11,7 @@ const t = window.TrelloPowerUp.iframe();
  * @param {ClickEvent} event
  */
 function save(event) {
-    
+
     const form = document.getElementById("settings");
 
     const formElements = form.elements;
@@ -73,7 +73,7 @@ function renderSettings(placeHolder, list) {
  */
 function prepareSettingsElement() {
     const settingDiv = document.getElementById("settings");
-    
+
     const settingListDiv = document.getElementById("settings_list");
 
     //event submit (mean save settings) pulls event rerender cos I should clean element list 
@@ -88,23 +88,39 @@ function prepareSettingsElement() {
 }
 
 t.render(function () {
-    
+
     prepareSettingsElement();
 
     const settingListDiv = document.getElementById("settings_list");
-    //get settings
-    return t.get("board", "private", SETTINGS_KEY)
-        .then(function (settings) {
 
-            //user already define custom settings
-            if (settings) {
-                return renderSettings(settingListDiv, settings.list);
-            } else {
-                //settings doesn't extst, so, define new one
-                return t.lists("id", "name")
-                    .then(function (list) {
+    //get settings
+    return t.lists("id", "name")
+        .then(function (list) {
+            return t.get("board", "private", SETTINGS_KEY)
+                .then(function (settings) {
+                    //user already define a settings and list count didn't change
+                    if (settings) {
+                        if (settings.list.length === list.length) {
+                            return renderSettings(settingListDiv, settings.list);
+                        } else {
+                            //settings defined, but user list count updated, so merge it to one list
+                            const mergedList = list.map(element => {
+                                const sElement = settings.list.find(e => e.id === element.id);
+                                const checked = sElement && sElement.checked;
+                                return {
+                                    id: element.id,
+                                    name: element.name,
+                                    checked
+                                }
+                                
+                            });
+                            return renderSettings(settingListDiv, mergedList);
+                        }
+
+                    } else {
+                        //settings doesn't exist
                         return renderSettings(settingListDiv, list);
-                    });
-            }
-        })
+                    }
+                })
+        });
 });

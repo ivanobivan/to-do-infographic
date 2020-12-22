@@ -26,9 +26,12 @@ function createLinearDiv(innerText) {
     return linearDiv;
 }
 
-function createListDiv(indicatorClass) {
+function createListDiv(innerText, indicatorClass) {
     const list = document.createElement("div");
     list.className = "list";
+    if(innerText) {
+        list.innerText = innerText;
+    }
     if (indicatorClass) {
         list.className += ` ${indicatorClass}`;
     }
@@ -36,12 +39,14 @@ function createListDiv(indicatorClass) {
 }
 
 function buildDomTree(data) {
-    debugger
     const { headers, body, max } = data;
 
     const grid = [];
 
-    const headersDomList = headers.map(header => createLinearDiv(header));
+    const headersDomList = []; 
+
+    headersDomList.push(createLinearDiv("scale"));
+    headers.forEach(header => createListDiv(header))
 
     grid.push(headersDomList);
 
@@ -95,9 +100,9 @@ function buildDomTree(data) {
             const element = list[i];
             if (element) {
                 if (element.closed) {
-                    bodyList[i].push(createListDiv("green"));
+                    bodyList[i].push(createListDiv(null, "green"));
                 } else {
-                    bodyList[i].push(createListDiv("red"));
+                    bodyList[i].push(createListDiv(null, "red"));
                 }
             } else {
                 bodyList[i].push(createListDiv());
@@ -114,10 +119,10 @@ function buildDomTree(data) {
     */
 
     grid.push(...bodyList);
-    render(grid);
+    render(grid, body.length);
 }
 
-function render(grid) {
+function render(grid, gridColumnCount) {
     const infographic = document.getElementById("infographic");
     const header = document.createElement("header");
     header.innerText = "to-do-infographic";
@@ -125,12 +130,23 @@ function render(grid) {
     const infographicMeasure = document.createElement("div");
     infographicMeasure.className = "infographic-measure";
 
-    grid.forEach(list => list.forEach(e => infographicMeasure.appendChild(e)));
+    grid.forEach((list, index, array) => {
+        if(index - 1 === array.length) {
+            e.style.borderBottom = "none";
+        }
+        list.forEach(e => infographicMeasure.appendChild(e))
+    });
 
     const explain = document.createElement("div");
     explain.className = "explain";
 
     infographicMeasure.appendChild(explain);
+
+    infographicMeasure.style.gridTemplateColumns = `0.5fr repeat(${gridColumnCount}, 1fr) 0.5fr`;
+    infographicMeasure.style.gridTemplateRows = `repeat(${grid.length}, 1fr)`;
+
+    infographic.innerHTML = "";
+    infographic.innerText = "";
 
     infographic.appendChild(infographicMeasure);
 
@@ -187,9 +203,7 @@ function getDataForInfographic(token, settings) {
 
     //what max card count it could get from all lists
     let MAX_CARD_COUNT = 0;
-
-    //list with trello-list names, for grid first element is scale whenever
-    const headers = ["scale"];
+    const headers = [];
 
     return Promise.all(
         settings.list.map(element => {
