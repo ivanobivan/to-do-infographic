@@ -29,7 +29,7 @@ function createLinearDiv(innerText) {
 function createListDiv(innerText, indicatorClass) {
     const list = document.createElement("div");
     list.className = "list";
-    if(innerText) {
+    if (innerText) {
         list.innerText = innerText;
     }
     if (indicatorClass) {
@@ -43,7 +43,7 @@ function buildDomTree(data) {
 
     const grid = [];
 
-    const headersDomList = []; 
+    const headersDomList = [];
 
     headersDomList.push(createLinearDiv("scale"));
     headers.forEach(header => createListDiv(header))
@@ -127,11 +127,13 @@ function render(grid, gridColumnCount) {
     const header = document.createElement("header");
     header.innerText = "to-do-infographic";
 
+    const footer = document.createElement("footer");
+
     const infographicMeasure = document.createElement("div");
     infographicMeasure.className = "infographic-measure";
 
     grid.forEach((list, index, array) => {
-        if(index - 1 === array.length) {
+        if (index - 1 === array.length) {
             e.style.borderBottom = "none";
         }
         list.forEach(e => infographicMeasure.appendChild(e))
@@ -148,9 +150,13 @@ function render(grid, gridColumnCount) {
     infographic.innerHTML = "";
     infographic.innerText = "";
 
+    //append header
+    infographic.appendChild(header);
+
+    //append infographic data
     infographic.appendChild(infographicMeasure);
 
-    const footer = document.createElement("footer");
+    //append footer
     infographic.appendChild(footer);
 }
 
@@ -205,6 +211,9 @@ function getDataForInfographic(token, settings) {
     let MAX_CARD_COUNT = 0;
     const headers = [];
 
+    if (settings.list && settings.list.length === 0) {
+        return Promise.reject("No list is selected in the settings");
+    }
     return Promise.all(
         settings.list.map(element => {
             return new Promise((resolve, reject) => {
@@ -225,13 +234,15 @@ function getDataForInfographic(token, settings) {
                         .catch(function (err) {
                             reject(err);
                         })
+                } else {
+                    resolve(null);
                 }
             });
         })
     ).then(result => {
         return {
             headers,
-            body: result,
+            body: result.filter(r => r !== null),
             max: MAX_CARD_COUNT
         }
     });
