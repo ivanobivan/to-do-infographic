@@ -67,7 +67,7 @@ function buildDomTree(data) {
     for (let i = 0; i < OFFSET; i++) {
         const divList = [];
         divList.push(createLinearDiv(`offsetLinear${i}`));
-        for (let j; j < body.length; j++) {
+        for (let j = 0; j < body.length; j++) {
             divList.push(createListDiv(`offsetList${i}${j}`));
         }
         grid.push(divList);
@@ -108,9 +108,9 @@ function buildDomTree(data) {
             const element = list[i];
             if (element) {
                 if (element.closed) {
-                    bodyList[i].push(createListDiv(`bodyList${i}`, null, "green"));
+                    bodyList[i].push(createListDiv(element.id, null, "green"));
                 } else {
-                    bodyList[i].push(createListDiv(`bodyList${i}`, null, "red"));
+                    bodyList[i].push(createListDiv(element.id, null, "red"));
                 }
             } else {
                 bodyList[i].push(createListDiv(`bodyList${i}`));
