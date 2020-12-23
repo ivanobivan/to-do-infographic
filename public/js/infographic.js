@@ -17,16 +17,19 @@ function clean() {
     placeHolder.innerText = "";
 }
 
-function createLinearDiv(innerText) {
+function createLinearDiv(id, innerText) {
     const linearDiv = document.createElement("div");
     linearDiv.className = "linear";
     if (innerText) {
         linearDiv.innerText = innerText;
     }
+    if (id) {
+        linearDiv.id = id;
+    }
     return linearDiv;
 }
 
-function createListDiv(innerText, indicatorClass) {
+function createListDiv(id, innerText, indicatorClass) {
     const list = document.createElement("div");
     list.className = "list";
     if (innerText) {
@@ -34,6 +37,9 @@ function createListDiv(innerText, indicatorClass) {
     }
     if (indicatorClass) {
         list.className += ` ${indicatorClass}`;
+    }
+    if (id) {
+        list.id = id;
     }
     return list;
 }
@@ -45,8 +51,8 @@ function buildDomTree(data) {
 
     const headersDomList = [];
 
-    headersDomList.push(createLinearDiv("scale"));
-    headers.forEach(header => headersDomList.push(createListDiv(header)));
+    headersDomList.push(createLinearDiv("scaleLinear", "scale"));
+    headers.forEach((header, index) => headersDomList.push(createListDiv(`${header}${index}`, header)));
 
     grid.push(headersDomList);
 
@@ -60,8 +66,8 @@ function buildDomTree(data) {
 
     for (let i = 0; i < OFFSET; i++) {
         const divList = new Array(body.length);
-        divList.fill(createListDiv());
-        divList.unshift(createLinearDiv());
+        divList.fill(createListDiv(`offsetList${i}`));
+        divList.unshift(createLinearDiv(`offsetLinear${i}`));
         grid.push(divList);
     }
 
@@ -89,7 +95,7 @@ function buildDomTree(data) {
         [0]
     ] */
     for (let i = 1; i <= max; i++) {
-        bodyList[i - 1] = [createLinearDiv(max - i)];
+        bodyList[i - 1] = [createLinearDiv(`bodyLInear${i}`, max - i)];
     }
 
     body.forEach(list => {
@@ -100,12 +106,12 @@ function buildDomTree(data) {
             const element = list[i];
             if (element) {
                 if (element.closed) {
-                    bodyList[i].push(createListDiv(null, "green"));
+                    bodyList[i].push(createListDiv(`bodyList${i}`, null, "green"));
                 } else {
-                    bodyList[i].push(createListDiv(null, "red"));
+                    bodyList[i].push(createListDiv(`bodyList${i}`, null, "red"));
                 }
             } else {
-                bodyList[i].push(createListDiv());
+                bodyList[i].push(createListDiv(`bodyList${i}`));
             }
         }
 
