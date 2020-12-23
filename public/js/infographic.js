@@ -46,7 +46,7 @@ function buildDomTree(data) {
     const headersDomList = [];
 
     headersDomList.push(createLinearDiv("scale"));
-    headers.forEach(header => createListDiv(header))
+    headers.forEach(header => headersDomList.push(createListDiv(header)));
 
     grid.push(headersDomList);
 
@@ -136,11 +136,15 @@ function render(grid, gridColumnCount) {
         if (index - 1 === array.length) {
             e.style.borderBottom = "none";
         }
-        list.forEach(e => infographicMeasure.appendChild(e))
+        list.forEach(e => {
+            infographicMeasure.appendChild(e);
+        })
     });
 
     const explain = document.createElement("div");
     explain.className = "explain";
+    explain.style.gridColumnStart = gridColumnCount + 2;
+    explain.style.gridColumnEnd = gridColumnCount + 3;
 
     infographicMeasure.appendChild(explain);
 
