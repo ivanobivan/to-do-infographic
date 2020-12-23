@@ -32,7 +32,7 @@ function createLinearDiv(id, innerText) {
 function createListDiv(id, innerText, indicatorClass) {
     const list = document.createElement("div");
     list.className = "list";
-    if (innerText || innerText !== 0) {
+    if (innerText || innerText === 0) {
         list.innerText = innerText;
     }
     if (indicatorClass) {
@@ -45,7 +45,7 @@ function createListDiv(id, innerText, indicatorClass) {
 }
 
 function generateUniqId() {
-    return 'yxxxxxxx-yxxx-yxxx-yxxx'.replace(/[xy]/g, function (c) {
+    return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
@@ -72,8 +72,8 @@ function buildDomTree(data) {
     const OFFSET = 5;
 
     for (let i = 0; i < OFFSET; i++) {
-        const divList = [];    
-        divList.push(createLinearDiv(`offsetLinear${i}`, max + i));
+        const divList = [];
+        divList.push(createLinearDiv(`offsetLinear${i}`, (max + OFFSET - i - 1)));
         for (let j = 0; j < body.length; j++) {
             divList.push(createListDiv(`offsetList${i}${j}`));
         }
@@ -120,7 +120,7 @@ function buildDomTree(data) {
                     bodyList[i].push(createListDiv(element.id, element.name, "red"));
                 }
             } else {
-                bodyList[i].push(createListDiv(generateUniqId()));
+                bodyList[i].push(createListDiv(generateUniqId()), null, "empty");
             }
         }
 
@@ -160,6 +160,8 @@ function render(grid, gridColumnCount) {
     explain.className = "explain";
     explain.style.gridColumnStart = gridColumnCount + 2;
     explain.style.gridColumnEnd = gridColumnCount + 3;
+    explain.style.gridRowStart = 1;
+    explain.style.gridRowEnd = grid.length;
 
     infographicMeasure.appendChild(explain);
 
