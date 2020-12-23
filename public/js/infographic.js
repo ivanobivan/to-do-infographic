@@ -20,7 +20,7 @@ function clean() {
 function createLinearDiv(id, innerText) {
     const linearDiv = document.createElement("div");
     linearDiv.className = "linear";
-    if (innerText) {
+    if (innerText || innerText !== 0) {
         linearDiv.innerText = innerText;
     }
     if (id) {
@@ -32,7 +32,7 @@ function createLinearDiv(id, innerText) {
 function createListDiv(id, innerText, indicatorClass) {
     const list = document.createElement("div");
     list.className = "list";
-    if (innerText) {
+    if (innerText || innerText !== 0) {
         list.innerText = innerText;
     }
     if (indicatorClass) {
@@ -42,6 +42,13 @@ function createListDiv(id, innerText, indicatorClass) {
         list.id = id;
     }
     return list;
+}
+
+function generateUniqId() {
+    return 'yxxxxxxx-yxxx-yxxx-yxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
 function buildDomTree(data) {
@@ -65,8 +72,8 @@ function buildDomTree(data) {
     const OFFSET = 5;
 
     for (let i = 0; i < OFFSET; i++) {
-        const divList = [];
-        divList.push(createLinearDiv(`offsetLinear${i}`));
+        const divList = [];    
+        divList.push(createLinearDiv(`offsetLinear${i}`, max + i));
         for (let j = 0; j < body.length; j++) {
             divList.push(createListDiv(`offsetList${i}${j}`));
         }
@@ -97,7 +104,7 @@ function buildDomTree(data) {
         [0]
     ] */
     for (let i = 1; i <= max; i++) {
-        bodyList[i - 1] = [createLinearDiv(`bodyLInear${i}`, max - i)];
+        bodyList[i - 1] = [createLinearDiv(`bodyLinear${i}`, max - i)];
     }
 
     body.forEach(list => {
@@ -108,12 +115,12 @@ function buildDomTree(data) {
             const element = list[i];
             if (element) {
                 if (element.closed) {
-                    bodyList[i].push(createListDiv(element.id, null, "green"));
+                    bodyList[i].push(createListDiv(element.id, element.name, "green"));
                 } else {
-                    bodyList[i].push(createListDiv(element.id, null, "red"));
+                    bodyList[i].push(createListDiv(element.id, element.name, "red"));
                 }
             } else {
-                bodyList[i].push(createListDiv(`bodyList${i}`));
+                bodyList[i].push(createListDiv(generateUniqId()));
             }
         }
 
