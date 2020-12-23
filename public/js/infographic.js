@@ -68,7 +68,7 @@ function buildDomTree(data) {
         const divList = new Array(body.length);
         divList.push(createLinearDiv(`offsetLinear${i}`));
         for (let j; j < body.length; j++) {
-            divList.push(createListDiv(`offsetList${j}`));
+            divList.push(createListDiv(`offsetList${i}${j}`));
         }
         grid.push(divList);
     }
