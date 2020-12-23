@@ -120,7 +120,7 @@ function buildDomTree(data) {
                     bodyList[i].push(createListDiv(element.id, element.name, "red"));
                 }
             } else {
-                bodyList[i].push(createListDiv(generateUniqId()), null, "empty");
+                bodyList[i].push(createListDiv(generateUniqId(), null, "empty"));
             }
         }
 
