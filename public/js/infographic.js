@@ -106,7 +106,7 @@ function onClickListElementHandler(element) {
     const cardInformation = document.getElementById("cardInformation");
     cardInformation.innerHTML = "";
     for (let key in element) {
-        const span = document.createElement("span");
+        const span = document.createElement("div");
         span.innerText = `${key} - ${element[key]}`;
         cardInformation.appendChild(span);
     }
