@@ -17,32 +17,83 @@ function clean() {
     placeHolder.innerText = "";
 }
 
-function createLinearDiv(id, innerText) {
-    const linearDiv = document.createElement("div");
-    linearDiv.className = "linear";
-    if (innerText || innerText !== 0) {
-        linearDiv.innerText = innerText;
+
+function createDomElementWithOptions(elementType, className, id, innerText, indicatorClass, title, onClickHandler) {
+    const domElement = document.createElement(elementType);
+    if (className) {
+        domElement.className = className;
     }
     if (id) {
-        linearDiv.id = id;
+        domElement.id = id;
     }
-    return linearDiv;
-}
-
-function createListDiv(id, innerText, indicatorClass) {
-    const list = document.createElement("div");
-    list.className = "list";
     if (innerText || innerText === 0) {
-        list.innerText = innerText;
+        domElement.innerText = innerText;
     }
     if (indicatorClass) {
         list.className += ` ${indicatorClass}`;
     }
-    if (id) {
-        list.id = id;
+    if (title) {
+        list.title = title;
     }
-    return list;
+    if (onClickHandler) {
+        list.onclick = onClickHandler;
+    }
+    return domElement;
 }
+
+function createHeader() {
+    return createDomElementWithOptions("header", "header", null, "to-do-infographic");
+}
+
+function createFooter() {
+    return createDomElementWithOptions("footer", "footer");
+}
+
+function createLinearDiv(id, innerText, indicatorClass, title) {
+    return createDomElementWithOptions("div", "linear", id, innerText, indicatorClass, title);
+}
+
+function createListDiv(id, innerText, indicatorClass, title, onClickHandler) {
+    return createDomElementWithOptions("div", "list", id, innerText, indicatorClass, title, onClickHandler);
+}
+
+function createLegendDiv(circleAdditionalClass, spanText) {
+    const legend = createDomElementWithOptions("div", "legend");
+    if (circleAdditionalClass) {
+        const circle = createDomElementWithOptions("div", "block", null, null, circleAdditionalClass);
+        legend.appendChild(circle);
+    }
+    if (spanText) {
+        const span = createDomElementWithOptions("span", null, null, spanText);;
+        legend.appendChild(span);
+    }
+    return legend;
+}
+
+function createInfoDiv() {
+    const info = createDomElementWithOptions("div", "info");
+    info.appendChild(createDomElementWithOptions("span", null, null, "Card Information"));
+    info.appendChild(createDomElementWithOptions("div", null, "cardInformation"));
+    return info;
+}
+
+function createExplainDiv(gridRowEnd, gridColumnCount, startDate, endDate) {
+    const explain = createDomElementWithOptions("div", "explain");
+    explain.style.gridColumnStart = gridColumnCount + 2;
+    explain.style.gridColumnEnd = gridColumnCount + 3;
+    explain.style.gridRowStart = 1;
+    explain.style.gridRowEnd = gridRowEnd + 1;
+
+    explain.appendChild(createLegendDiv("red", "Not done"));
+    explain.appendChild(createLegendDiv("green", "Done"));
+    explain.appendChild(createLegendDiv(null, `${startDate} - Date of start`));
+    explain.appendChild(createLegendDiv(null, `${endDate} - Date of end`));
+    explain.appendChild(createDomElementWithOptions("hr"));
+    explain.appendChild(createInfoDiv());
+
+    return explain;
+}
+
 
 function generateUniqId() {
     return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function (c) {
@@ -51,15 +102,26 @@ function generateUniqId() {
     });
 }
 
-function buildDomTree(data) {
+function onClickListElementHandler(element) {
+    const cardInformation = document.getElementById("cardInformation");
+    cardInformation.innerHTML = "";
+    for (let key of element) {
+        const span = document.createElement("span");
+        span.innerText = `${key} - ${element[key]}`;
+        cardInformation.appendChild(span);
+    }
+}
+
+function buildDomTree(data, settings) {
     const { headers, body, max } = data;
+    const { startDate, endDate } = settings
 
     const grid = [];
 
     const headersDomList = [];
 
-    headersDomList.push(createLinearDiv("scaleLinear", "scale"));
-    headers.forEach((header, index) => headersDomList.push(createListDiv(`${header}${index}`, header)));
+    headersDomList.push(createLinearDiv("scaleLinear", "scale", "header"));
+    headers.forEach((header, index) => headersDomList.push(createListDiv(`${header}${index}`, header, "header", header)));
 
     grid.push(headersDomList);
 
@@ -115,12 +177,12 @@ function buildDomTree(data) {
             const element = list[i];
             if (element) {
                 if (element.closed) {
-                    bodyList[i].push(createListDiv(element.id, element.name, "green"));
+                    bodyList[i].push(createListDiv(element.id, element.name, "green", element.name, () => onClickListElementHandler(element)));
                 } else {
-                    bodyList[i].push(createListDiv(element.id, element.name, "red"));
+                    bodyList[i].push(createListDiv(element.id, element.name, "red", element.name, () => onClickListElementHandler(element)));
                 }
             } else {
-                bodyList[i].push(createListDiv(generateUniqId(), null, "empty"));
+                bodyList[i].push(createListDiv(generateUniqId(), null, "empty", "card name isn't specified yet"));
             }
         }
 
@@ -138,17 +200,18 @@ function buildDomTree(data) {
 }
 
 function render(grid, gridColumnCount) {
+    //main container
     const infographic = document.getElementById("infographic");
-    const header = document.createElement("header");
-    header.innerText = "to-do-infographic";
 
-    const footer = document.createElement("footer");
+    const header = createHeader();
+
+    const footer = createFooter();
 
     const infographicMeasure = document.createElement("div");
     infographicMeasure.className = "infographic-measure";
 
     grid.forEach((list, index, array) => {
-        if (index - 1 === array.length) {
+        if (index + 1 === array.length) {
             e.style.borderBottom = "none";
         }
         list.forEach(e => {
@@ -156,16 +219,9 @@ function render(grid, gridColumnCount) {
         })
     });
 
-    const explain = document.createElement("div");
-    explain.className = "explain";
-    explain.style.gridColumnStart = gridColumnCount + 2;
-    explain.style.gridColumnEnd = gridColumnCount + 3;
-    explain.style.gridRowStart = 1;
-    explain.style.gridRowEnd = grid.length;
+    infographicMeasure.appendChild(createExplainDiv(grid.length, gridColumnCount, startDate, endDate));
 
-    infographicMeasure.appendChild(explain);
-
-    infographicMeasure.style.gridTemplateColumns = `0.5fr repeat(${gridColumnCount}, 1fr) 0.5fr`;
+    infographicMeasure.style.gridTemplateColumns = `0.2fr repeat(${gridColumnCount}, 1fr) 0.5fr`;
     infographicMeasure.style.gridTemplateRows = `repeat(${grid.length}, 1fr)`;
 
     infographic.innerHTML = "";
@@ -279,7 +335,7 @@ t.render(function () {
                         if (settings) {
                             getDataForInfographic(token, settings)
                                 .then(result => {
-                                    buildDomTree(result);
+                                    buildDomTree(result, settings);
                                 }).catch(err => {
                                     stub(err.message);
                                 });

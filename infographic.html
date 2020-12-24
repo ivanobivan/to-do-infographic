@@ -10,52 +10,90 @@
     <script src="https://p.trellocdn.com/power-up.min.js" crossorigin="anonymous"></script>
     <script src="./public/js/infographic.js"></script>
     <div id="infographic">
-        <!-- <header>to-do-infographic</header>
-        <div class="infographic-measure">
-            <div class="linear">Scale</div>
-            <div class="list">First list</div>
-            <div class="list">Second list</div>
-            
-            <div class="linear">8</div>
-            <div class="list"></div>
-            <div class="list"></div>
-            
-
-            <div class="linear">7</div>
-            <div class="list"></div>
-            <div class="list"></div>
-
-            <div class="linear">6</div>
-            <div class="list"></div>
-            <div class="list"></div>
-
-            <div class="linear">5</div>
-            <div class="list red"></div>
-            <div class="list"></div>
-
-            <div class="linear">4</div>
-            <div class="list red"></div>
-            <div class="list"></div>
-
-            <div class="linear">3</div>
-            <div class="list red"></div>
-            <div class="list"></div>
-
-            <div class="linear">2</div>
-            <div class="list red"></div>
-            <div class="list"></div>
-
-            <div class="linear">1</div>
-            <div class="list green"></div>
-            <div class="list"></div>
-
-            <div class="linear" style="border-bottom:none">0</div>
-            <div class="list green" style="border-bottom:none"></div>
-            <div class="list" style="border-bottom:none"></div>
-
-
-            <div class="explain">explain</div>
-            
+       <!--  <header>to-do-infographic</header>
+        <div class="infographic-measure"
+            style="grid-template-columns: 0.2fr repeat(3, 1fr) 0.5fr; grid-template-rows: repeat(15, 1fr);">
+            <div class="linear header" id="scaleLinear">scale</div>
+            <div class="list header" id="rest0">rest</div>
+            <div class="list header" id="fest1">fest</div>
+            <div class="list header" id="pest2">pest</div>
+            <div class="linear" id="offsetLinear0">13</div>
+            <div class="list" id="offsetList00"></div>
+            <div class="list" id="offsetList01"></div>
+            <div class="list" id="offsetList02"></div>
+            <div class="linear" id="offsetLinear1">12</div>
+            <div class="list" id="offsetList10"></div>
+            <div class="list" id="offsetList11"></div>
+            <div class="list" id="offsetList12"></div>
+            <div class="linear" id="offsetLinear2">11</div>
+            <div class="list" id="offsetList20"></div>
+            <div class="list" id="offsetList21"></div>
+            <div class="list" id="offsetList22"></div>
+            <div class="linear" id="offsetLinear3">10</div>
+            <div class="list" id="offsetList30"></div>
+            <div class="list" id="offsetList31"></div>
+            <div class="list" id="offsetList32"></div>
+            <div class="linear" id="offsetLinear4">9</div>
+            <div class="list" id="offsetList40"></div>
+            <div class="list" id="offsetList41"></div>
+            <div class="list" id="offsetList42"></div>
+            <div class="linear" id="bodyLinear1">8</div>
+            <div class="list empty" id="800451bcbaaa9baa8751"></div>
+            <div class="list empty" id="8d4040cd8198ae5e9ee7"></div>
+            <div class="list red" id="5fe2413ae37be95608802427">1</div>
+            <div class="linear" id="bodyLinear2">7</div>
+            <div class="list empty" id="aa9589a1b70d9bc79b3e"></div>
+            <div class="list empty" id="89975e84af7b83748231"></div>
+            <div class="list red" id="5fe2413b66107448d9926647">2</div>
+            <div class="linear" id="bodyLinear3">6</div>
+            <div class="list empty" id="b0f91c35bbb7ae2195b1"></div>
+            <div class="list empty" id="bbd31ac0b5c49cd7976d"></div>
+            <div class="list red" id="5fe2413b18ffd7457ea85bf5">3</div>
+            <div class="linear" id="bodyLinear4">5</div>
+            <div class="list empty" id="98fe9532b224b640950d"></div>
+            <div class="list empty" id="bb2f14fdb8f2859ba599"></div>
+            <div class="list red" id="5fe2413c8069536192fe5fce">4</div>
+            <div class="linear" id="bodyLinear5">4</div>
+            <div class="list red" id="5fd8f83a9276ee1976718e5e">11</div>
+            <div class="list empty" id="9076b4b884eb896d80ad"></div>
+            <div class="list red" id="5fe2413dbc8f2066d6a88f38">5</div>
+            <div class="linear" id="bodyLinear6">3</div>
+            <div class="list red" id="5fd90326a02090196c69ad12">2</div>
+            <div class="list empty" id="a4ce0d9fb93a8141a99a"></div>
+            <div class="list red" id="5fe3820f3bb8df145482ff71">6</div>
+            <div class="linear" id="bodyLinear7">2</div>
+            <div class="list green" id="5fd9037cd84cb38088bc2207">3</div>
+            <div class="list red" id="5fd8f83cfbdd114043c5fe17">12</div>
+            <div class="list red" id="5fe382102dac918b2e1747db">7</div>
+            <div class="linear" id="bodyLinear8">1</div>
+            <div class="list green" id="5fdb9c787ec2ef5fec8c410f">closedCard</div>
+            <div class="list red" id="5fd8f83fa4db95611753c7e8">123</div>
+            <div class="list red" id="5fe38210508bfe25acfa2e88">8</div>
+            <div class="linear" style="border-bottom: none;" id="bodyLinear9">0</div>
+            <div class="list green" style="border-bottom: none;" id="5fd903ef36d3e18bdd5ff97f">4</div>
+            <div class="list red" style="border-bottom: none;" id="5fd91187ac229c5ed9deb2f2">321</div>
+            <div class="list red" style="border-bottom: none;" id="5fe38212eac7884b98aa9240">9</div>
+            <div class="explain" style="grid-area: 1 / 5 / 16 / 6;">
+                <div class="legend">
+                    <div class="block red"></div>
+                    <span>Not done</span>
+                </div>
+                <div class="legend">
+                    <div class="block green"></div>
+                    <span>Done</span>
+                </div>
+                <div class="legend">
+                    <span>1970-01-01 - Date of start</span>
+                </div>
+                <div class="legend">
+                    <span>1970-01-01 - Date of finish</span>
+                </div>
+                <hr/>
+                <div class="info">
+                    <span>Card Information</span>
+                    <span>dateLastActivity - 2020-12-15T17:54:02.092Z</span>
+                </div>
+            </div>
         </div>
         <footer></footer> -->
     </div>
