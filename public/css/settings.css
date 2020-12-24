@@ -3,10 +3,17 @@
     flex-direction: column;
 }
 
-#settings button[type="submit"] {
-    order: 100;
+#settings > label {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 0.5fr 1fr;
+    margin-bottom: 10px;
 }
 
+#settings button[type="submit"] {
+    order: 100;
+    margin-top: 10px;
+}
 
 #settings #settings_list {
     display: flex;
