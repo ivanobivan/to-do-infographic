@@ -196,10 +196,10 @@ function buildDomTree(data, settings) {
     */
 
     grid.push(...bodyList);
-    render(grid, body.length);
+    render(grid, body.length, startDate, endDate);
 }
 
-function render(grid, gridColumnCount) {
+function render(grid, gridColumnCount, startDate, endDate) {
     //main container
     const infographic = document.getElementById("infographic");
 
