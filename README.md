@@ -4,12 +4,14 @@ Trello power-up application for demonstrate the completed tasks relative to all 
 ### what can it do
   - Show unfinished tasks as red blocks
   - Show finished tasks as red blocks
+  - Show card information in separate window (name, last activity date)
+  - Show list information in separate window (how many cards, how many completed)
 
 ### how it looks like
   ![](resources/infographic.png)
 
 ### what will be able to do
-  - Maybe it will be possible to add an application from the platform
+  - Perhaps the application will be hosted on the Trello platform 
 ### how to add
   - Only as custom power-up
 
