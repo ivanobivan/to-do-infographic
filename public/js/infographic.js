@@ -105,7 +105,7 @@ function generateUniqId() {
 function onClickListElementHandler(element) {
     const cardInformation = document.getElementById("cardInformation");
     cardInformation.innerHTML = "";
-    for (let key of element) {
+    for (let key in element) {
         const span = document.createElement("span");
         span.innerText = `${key} - ${element[key]}`;
         cardInformation.appendChild(span);
