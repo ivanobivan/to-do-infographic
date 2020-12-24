@@ -30,13 +30,13 @@ function createDomElementWithOptions(elementType, className, id, innerText, indi
         domElement.innerText = innerText;
     }
     if (indicatorClass) {
-        list.className += ` ${indicatorClass}`;
+        domElement.className += ` ${indicatorClass}`;
     }
     if (title) {
-        list.title = title;
+        domElement.title = title;
     }
     if (onClickHandler) {
-        list.onclick = onClickHandler;
+        domElement.onclick = onClickHandler;
     }
     return domElement;
 }
@@ -337,6 +337,7 @@ t.render(function () {
                                 .then(result => {
                                     buildDomTree(result, settings);
                                 }).catch(err => {
+                                    console.error(err);
                                     stub(err.message);
                                 });
                         } else {
