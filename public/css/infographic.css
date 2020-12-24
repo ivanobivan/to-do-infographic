@@ -95,6 +95,9 @@ body {
     margin: 0 2vw;
     border-left: var(--grid-border);
     border-right: var(--grid-border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #infographic .infographic-measure .list.green {
