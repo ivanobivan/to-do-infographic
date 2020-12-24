@@ -212,11 +212,16 @@ function render(grid, gridColumnCount) {
 
     grid.forEach((list, index, array) => {
         if (index + 1 === array.length) {
-            e.style.borderBottom = "none";
+            list.forEach(e => {
+                e.style.borderBottom = "none";
+                infographicMeasure.appendChild(e);
+            })
+        } else {
+            list.forEach(e => {
+                infographicMeasure.appendChild(e);
+            })
         }
-        list.forEach(e => {
-            infographicMeasure.appendChild(e);
-        })
+
     });
 
     infographicMeasure.appendChild(createExplainDiv(grid.length, gridColumnCount, startDate, endDate));
