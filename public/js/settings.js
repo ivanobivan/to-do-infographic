@@ -47,6 +47,13 @@ function save(event) {
     event.preventDefault();
 }
 
+function overrideSettingsDate(startDateValue, endDateValue) {
+    const startDate = document.getElementById("startDate");
+    startDate.value = startDateValue;
+
+    const endDate = document.getElementById("endDate");
+    endDate.value = endDateValue;
+}
 
 /* *
  * add list elements into settings placeholder
@@ -103,6 +110,7 @@ t.render(function () {
                 .then(function (settings) {
                     //user already define a settings and list count didn't change
                     if (settings) {
+                        overrideSettingsDate(settings.startDate, settings.endDate);
                         if (settings.list.length === list.length) {
                             return renderSettings(settingListDiv, settings.list);
                         } else {
