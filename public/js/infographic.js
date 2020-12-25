@@ -256,7 +256,7 @@ function render(grid, gridColumnCount, startDate, endDate) {
 
     });
 
-    infographicMeasure.style.gridTemplateColumns = `0.2fr repeat(${gridColumnCount}, 1fr) 0.5fr`;
+    infographicMeasure.style.gridTemplateColumns = `0.2fr repeat(${gridColumnCount}, 1fr)`;
     infographicMeasure.style.gridTemplateRows = `repeat(${grid.length}, 1fr)`;
 
     infographic.innerHTML = "";
