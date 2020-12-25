@@ -24,6 +24,14 @@ body {
     overflow: hidden;
 }
 
+#infographic .loading {
+    width: 200px;
+    height: 130px;
+    position: absolute;
+    left: calc(50% - 100px);
+    top: calc(50% - 65px);
+}
+
 #infographic > header, #infographic > footer, #infographic .infographic-measure .linear, #infographic .infographic-measure .list {
     color: var(--default-text-color);
     font-size: var(--default-font-size);
