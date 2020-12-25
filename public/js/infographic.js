@@ -123,6 +123,7 @@ function onHeaderElementHandler(cardList, listName) {
     const cardInformation = getCardInformation();
     const notNullCardList = cardList.filter(card => card !== null);
     const closedCardList = notNullCardList.filter(card => card.closed);
+    const percentage = Math.round((closedCardList.length / notNullCardList.length) * 100);
     cardInformation.appendChild(
         createDomElementWithOptions("div", null, null, `Card count in list ${listName}: ${notNullCardList.length}`)
     );
@@ -133,8 +134,18 @@ function onHeaderElementHandler(cardList, listName) {
         createDomElementWithOptions("div", null, null, `Done card count: ${closedCardList.length}`)
     );
     cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Percentage of completion: ${Math.round((closedCardList.length / notNullCardList.length) * 100)} %`)
+        createDomElementWithOptions("div", null, null, `Percentage of completion: ${percentage} %`)
     );
+
+    const footer = document.getElementsByTagName("footer");
+    if (percentage > 0 && percentage < 50) {
+        footer.innerHTML = "you're making progress";
+    } else if (percentage >= 50 && percentage < 80) {
+        footer.innerHTML = "you did a great job during this period";
+    } else {
+        footer.innerHTML = "you can be proud of yourself";
+    }
+
 }
 
 function buildDomTree(data, settings) {
