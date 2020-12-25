@@ -290,18 +290,8 @@ function filterData(cardList, startDate, endDate) {
     const endTimeMS = getTimeMS(endDate);
     return cardList
         .filter(card => {
-            if (!card.closed) {
-                const dateLastActivityTimeMS = getTimeMS(trimISODate(card.dateLastActivity));
-                return dateLastActivityTimeMS >= startTimeMS;
-            }
-            return true;
-        })
-        .filter(card => {
-            if (card.closed) {
-                const dueTimeMS = getTimeMS(trimISODate(card.dateLastActivity));
-                return dueTimeMS <= endTimeMS;
-            }
-            return true;
+            const dateLastActivityTimeMS = getTimeMS(trimISODate(card.dateLastActivity));
+            return dateLastActivityTimeMS >= startTimeMS && dateLastActivityTimeMS <= endTimeMS;
         })
         .sort((a, b) => {
             if (a.closed && b.closed || !a.closed && !b.closed) {
