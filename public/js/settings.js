@@ -40,8 +40,8 @@ function save(event) {
     };
 
     t.set("board", "private", SETTINGS_KEY, settings)
-        .then(function() {
-            window.close();
+        .then(function () {
+            t.closePopup()
         });
 
     event.preventDefault();
@@ -115,7 +115,7 @@ t.render(function () {
                                     name: element.name,
                                     checked
                                 }
-                                
+
                             });
                             return renderSettings(settingListDiv, mergedList);
                         }

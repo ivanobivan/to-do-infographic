@@ -72,7 +72,7 @@ function createLegendDiv(circleAdditionalClass, spanText) {
 
 function createInfoDiv() {
     const info = createDomElementWithOptions("div", "info");
-    info.appendChild(createDomElementWithOptions("span", null, null, "Card Information"));
+    info.appendChild(createDomElementWithOptions("span", null, null, "Information"));
     info.appendChild(createDomElementWithOptions("div", null, "cardInformation"));
     return info;
 }
