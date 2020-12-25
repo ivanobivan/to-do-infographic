@@ -11,6 +11,13 @@ function stub(message) {
     placeHolder.innerText = message;
 }
 
+function loading() {
+    const placeHolder = document.getElementById("infographic");
+    const loading = createDomElementWithOptions("img", "loading");
+    loading.src = "https://ivanobivan.github.io/resources/loading.gif";
+    placeHolder.appendChild(loading);
+}
+
 function clean() {
     const placeHolder = document.getElementById("infographic");
     placeHolder.innerHTML = "";
@@ -244,6 +251,7 @@ function buildDomTree(data, settings) {
 }
 
 function render(grid, gridColumnCount, startDate, endDate) {
+    clean();
     //main container
     const infographic = document.getElementById("infographic");
 
@@ -322,7 +330,7 @@ function filterData(cardList, startDate, endDate) {
 }
 
 function getDataForInfographic(token, settings) {
-    stub("loading...");
+    loading();
 
     //what max card count it could get from all lists
     let MAX_CARD_COUNT = 0;
