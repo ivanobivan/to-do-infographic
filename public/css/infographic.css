@@ -51,6 +51,7 @@ body {
 
 #infographic > footer {
     grid-area: footer;
+    padding-left: 15px;
 }
 
 #infographic .infographic-measure {

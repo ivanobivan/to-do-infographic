@@ -144,13 +144,13 @@ function onHeaderElementHandler(cardList, listName) {
         createDomElementWithOptions("div", null, null, `Percentage of completion: ${percentage} %`)
     );
 
-    const footer = document.getElementsByTagName("footer");
+    const footer = document.getElementsByTagName("footer")[0];
     if (percentage > 0 && percentage < 50) {
-        footer.innerHTML = "you're making progress";
+        footer.innerText = "you're making progress";
     } else if (percentage >= 50 && percentage < 80) {
-        footer.innerHTML = "you did a great job during this period";
+        footer.innerText = "you did a great job during this period";
     } else {
-        footer.innerHTML = "you can be proud of yourself";
+        footer.innerText = "you can be proud of yourself";
     }
 
 }
