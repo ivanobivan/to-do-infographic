@@ -121,7 +121,7 @@ function onClickListElementHandler(element) {
 
 function onHeaderElementHandler(cardList, listName) {
     const cardInformation = getCardInformation();
-    const closedCardList = cardList.filter(card => card.closed);
+    const closedCardList = cardList.filter(card => card && card.closed);
     cardInformation.appendChild(
         createDomElementWithOptions("div", null, null, `Card count in list ${listName}: ${cardList.length}`)
     );
@@ -132,7 +132,7 @@ function onHeaderElementHandler(cardList, listName) {
         createDomElementWithOptions("div", null, null, `Done card count: ${closedCardList.length}`)
     );
     cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Percentage of completion: ${(cardclosedCardList.length / cardList.length) * 100}`)
+        createDomElementWithOptions("div", null, null, `Percentage of completion: ${Math.round((closedCardList.length / cardList.length) * 100)} %`)
     );
 }
 
