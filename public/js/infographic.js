@@ -77,12 +77,8 @@ function createInfoDiv() {
     return info;
 }
 
-function createExplainDiv(gridRowEnd, gridColumnCount, startDate, endDate) {
+function createExplainDiv(startDate, endDate) {
     const explain = createDomElementWithOptions("div", "explain");
-    explain.style.gridColumnStart = gridColumnCount + 2;
-    explain.style.gridColumnEnd = gridColumnCount + 3;
-    explain.style.gridRowStart = 1;
-    explain.style.gridRowEnd = gridRowEnd + 1;
 
     explain.appendChild(createLegendDiv("red", "Not done"));
     explain.appendChild(createLegendDiv("green", "Done"));
@@ -270,7 +266,7 @@ function render(grid, gridColumnCount, startDate, endDate) {
     infographic.appendChild(infographicMeasure);
 
     //append explain
-    infographic.appendChild(createExplainDiv(grid.length, gridColumnCount, startDate, endDate));
+    infographic.appendChild(createExplainDiv(startDate, endDate));
 
     //append footer
     infographic.appendChild(footer);
