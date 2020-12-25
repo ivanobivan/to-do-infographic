@@ -102,14 +102,38 @@ function generateUniqId() {
     });
 }
 
-function onClickListElementHandler(element) {
+function getCardInformation() {
     const cardInformation = document.getElementById("cardInformation");
     cardInformation.innerHTML = "";
+    return cardInformation;
+}
+
+function onClickListElementHandler(element) {
+    const cardInformation = getCardInformation();
     for (let key in element) {
-        const div = document.createElement("div");
-        div.innerText = `${key} - ${element[key]}`;
-        cardInformation.appendChild(div);
+        if (key !== 'id') {
+            const div = createDomElementWithOptions("div");
+            div.innerText = `${key} - ${element[key]}`;
+            cardInformation.appendChild(div);
+        }
     }
+}
+
+function onHeaderElementHandler(cardList, listName) {
+    const cardInformation = getCardInformation();
+    const closedCardList = cardList.filter(card => card.closed);
+    cardInformation.appendChild(
+        createDomElementWithOptions("div", null, null, `Card count in list ${listName}: ${cardList.length}`)
+    );
+    cardInformation.appendChild(
+        createDomElementWithOptions("div", null, null, `Not done card count: ${cardList.length - closedCardList.length}`)
+    );
+    cardInformation.appendChild(
+        createDomElementWithOptions("div", null, null, `Done card count: ${closedCardList.length}`)
+    );
+    cardInformation.appendChild(
+        createDomElementWithOptions("div", null, null, `Percentage of completion: ${(cardclosedCardList.length / cardList.length) * 100}`)
+    );
 }
 
 function buildDomTree(data, settings) {
@@ -121,7 +145,15 @@ function buildDomTree(data, settings) {
     const headersDomList = [];
 
     headersDomList.push(createLinearDiv("scaleLinear", "scale", "header"));
-    headers.forEach((header, index) => headersDomList.push(createListDiv(`${header}${index}`, header, "header", header)));
+    headers.forEach((header, index) => headersDomList.push(
+        createListDiv(
+            `${header}${index}`,
+            header,
+            "header",
+            header,
+            () => onHeaderElementHandler(body[index], header)
+        )
+    ));
 
     grid.push(headersDomList);
 
@@ -224,19 +256,21 @@ function render(grid, gridColumnCount, startDate, endDate) {
 
     });
 
-    infographicMeasure.appendChild(createExplainDiv(grid.length, gridColumnCount, startDate, endDate));
-
     infographicMeasure.style.gridTemplateColumns = `0.2fr repeat(${gridColumnCount}, 1fr) 0.5fr`;
     infographicMeasure.style.gridTemplateRows = `repeat(${grid.length}, 1fr)`;
 
     infographic.innerHTML = "";
     infographic.innerText = "";
 
+
     //append header
     infographic.appendChild(header);
 
     //append infographic data
     infographic.appendChild(infographicMeasure);
+
+    //append explain
+    infographic.appendChild(createExplainDiv(grid.length, gridColumnCount, startDate, endDate));
 
     //append footer
     infographic.appendChild(footer);
@@ -253,7 +287,7 @@ function trimISODate(dateString) {
 function filterData(cardList, startDate, endDate) {
     const startTimeMS = getTimeMS(startDate);
     const endTimeMS = getTimeMS(endDate);
-    cardList
+    return cardList
         .filter(card => {
             if (!card.closed) {
                 const dateLastActivityTimeMS = getTimeMS(trimISODate(card.dateLastActivity));
@@ -275,15 +309,14 @@ function filterData(cardList, startDate, endDate) {
                 return 1;
             }
             return -1;
-        });
-    return cardList.map(card => {
+        }).map(card => {
         return {
             id: card.id,
             date: getTimeMS(trimISODate(card.dateLastActivity)),
             name: card.name,
             closed: card.closed
         }
-    })
+    });
 }
 
 function getDataForInfographic(token, settings) {

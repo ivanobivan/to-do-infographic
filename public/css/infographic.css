@@ -14,13 +14,14 @@ body {
 #infographic {
     display: grid;
     grid-template-rows: 30px 1fr 30px;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 0.15fr;
     grid-template-areas: 
-        "header header header"
-        "content content content"
-        "footer footer footer";
+        "header header"
+        "content explain"
+        "footer footer";
     height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
 #infographic > header, #infographic > footer, #infographic .infographic-measure .linear, #infographic .infographic-measure .list {
@@ -47,6 +48,7 @@ body {
 #infographic .infographic-measure {
     grid-area: content;
     display: grid;
+    overflow: auto;
 }
 
 #infographic .infographic-measure > div {
@@ -55,14 +57,7 @@ body {
 
 
 #infographic .infographic-measure .linear, #infographic .infographic-measure .list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#infographic .infographic-measure .list:hover {
-    background-color: lightblue;
-    cursor: pointer;
+    text-align: center;
 }
 
 #infographic .infographic-measure .list:active {
@@ -74,27 +69,18 @@ body {
     justify-content: flex-end;
     padding-right: 10px;
     position: relative;
+    background: #edeff0;
 }
 
-#infographic .infographic-measure .linear::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 1px;
-    z-index: 1;
-    background: rgba(0,0,0,0.2);
-    width: 84.5vw;
-}
 
 #infographic .infographic-measure .linear.header::after {
     content: none;
 }
 
 #infographic .infographic-measure .list {
-    margin: 0 2vw;
     border-left: var(--grid-border);
     border-right: var(--grid-border);
+    border-bottom: var(--grid-border);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -128,23 +114,37 @@ body {
     border-left: none;
     border-right: none;
     text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #edeff0;
+    z-index: 2;
+    margin: 0;
 }
 
-#infographic .infographic-measure .explain {
+#infographic .infographic-measure .list:hover, #infographic .infographic-measure .list.heder:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+
+#infographic .explain {
     border: none;
+    background: #edeff0;
+    padding: 10px;
 }   
 
-#infographic .infographic-measure .explain .info {
+#infographic .explain .info {
     display: flex;
     flex-direction: column;
 }
 
-#infographic .infographic-measure .explain .legend {
+#infographic .explain .legend {
     display: flex;
     margin: 10px 0 0 0;
 }
 
-#infographic .infographic-measure .explain .legend .block {
+#infographic .explain .legend .block {
     height: 15px;
     width: 15px;
     border: 1px solid black;
@@ -152,10 +152,10 @@ body {
     margin-right: 10px;
 }
 
-#infographic .infographic-measure .explain .legend .block.red {
+#infographic .explain .legend .block.red {
     background-color: #ff6a6a;
 }
 
-#infographic .infographic-measure .explain .legend .block.green {
+#infographic .explain .legend .block.green {
     background-color: #29ab87;
 }
