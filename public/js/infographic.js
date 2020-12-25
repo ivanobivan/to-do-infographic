@@ -107,11 +107,15 @@ function getCardInformation() {
 function onClickListElementHandler(element) {
     const cardInformation = getCardInformation();
     for (let key in element) {
-        if (key !== 'id') {
-            const div = createDomElementWithOptions("div");
-            div.innerText = `${key} - ${element[key]}`;
-            cardInformation.appendChild(div);
+        let text;
+        if (key === "id") {
+            continue;
+        } else if (key === "date") {
+            text = `${key} - ${new Date(element[key]).toDateString()}`;
+        } else {
+            text = `${key} - ${element[key]}`;
         }
+        cardInformation.appendChild(createDomElementWithOptions("div", null, null, text));
     }
 }
 
@@ -306,13 +310,13 @@ function filterData(cardList, startDate, endDate) {
             }
             return -1;
         }).map(card => {
-        return {
-            id: card.id,
-            date: getTimeMS(trimISODate(card.dateLastActivity)),
-            name: card.name,
-            closed: card.closed
-        }
-    });
+            return {
+                id: card.id,
+                date: getTimeMS(trimISODate(card.dateLastActivity)),
+                name: card.name,
+                closed: card.closed
+            }
+        });
 }
 
 function getDataForInfographic(token, settings) {
