@@ -313,8 +313,10 @@ function filterData(cardList, startDate, endDate) {
             return dateLastActivityTimeMS >= startTimeMS && dateLastActivityTimeMS <= endTimeMS;
         })
         .sort((a, b) => {
-            if (a.closed && b.closed || !a.closed && !b.closed) {
+            if (a.closed && b.closed) {
                 return getTimeMS(b.dateLastActivity) - getTimeMS(a.dateLastActivity);
+            } else if (!a.closed && !b.closed) {
+                return getTimeMS(a.dateLastActivity) - getTimeMS(a.dateLastActivity);
             } else if (a.closed) {
                 return 1;
             }
