@@ -130,7 +130,7 @@ function onHeaderElementHandler(cardList, listName) {
     const cardInformation = getCardInformation();
     const notNullCardList = cardList.filter(card => card !== null);
     const closedCardList = notNullCardList.filter(card => card.closed);
-    const percentage = Math.round((closedCardList.length / notNullCardList.length) * 100);
+    const percentage = notNullCardList.length > 0 ? Math.round((closedCardList.length / notNullCardList.length) * 100) : 0;
     cardInformation.appendChild(
         createDomElementWithOptions("div", null, null, `Card count in list [${listName}]: ${notNullCardList.length}`)
     );
