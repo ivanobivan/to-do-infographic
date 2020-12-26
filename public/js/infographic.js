@@ -14,7 +14,7 @@ function stub(message) {
 function loading() {
     const placeHolder = document.getElementById("infographic");
     const loading = createDomElementWithOptions("img", "loading");
-    loading.src = "https://ivanobivan.github.io/resources/loading.gif";
+    loading.src = "https://ivanobivan.github.io/to-do-infographic/resources/loading.gif";
     placeHolder.appendChild(loading);
 }
 
