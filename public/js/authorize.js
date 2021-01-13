@@ -52,7 +52,9 @@ function authorize() {
                 window.addEventListener('storage', storageHandler);
             }
         }
-    );
+    ).then(function() {
+        t.closePopup()
+    });
 }
 
 const button = document.getElementById('authorize_button')
