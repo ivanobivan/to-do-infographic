@@ -39,6 +39,7 @@ const storageHandler = function (event) {
         t.storeSecret(PRIVATE_TOKEN_PATH, event.newValue);
         window.removeEventListener('storage', storageHandler);
     }
+    t.closePopup();
 }
 
 function authorize() {
@@ -52,9 +53,7 @@ function authorize() {
                 window.addEventListener('storage', storageHandler);
             }
         }
-    ).then(function() {
-        t.closePopup()
-    });
+    );
 }
 
 const button = document.getElementById('authorize_button')
