@@ -15,7 +15,7 @@ let requestParameters = [
     ["scope", "read"],
     ["key", apiKey],
     ["callback_method", "fragment"],
-    ["return_url", `${window.location.origin}%2Fto-do-infographic/auth-result.html`]
+    ["return_url", `${window.location.origin}%2Fauth-result.html`]
 ];
 
 let parametersAsString = "";
