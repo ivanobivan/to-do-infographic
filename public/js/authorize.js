@@ -39,7 +39,6 @@ const storageHandler = function (event) {
         t.storeSecret(PRIVATE_TOKEN_PATH, event.newValue);
         window.removeEventListener('storage', storageHandler);
     }
-    t.closePopup();
 }
 
 function authorize() {
