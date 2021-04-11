@@ -43,7 +43,7 @@ function createDomElementWithOptions(elementType, className, id, innerText, indi
         domElement.title = title;
     }
     if (onClickHandler) {
-        domElement.onclick = onClickHandler;
+        domElement.addEventListener("click", onClickHandler)
     }
     return domElement;
 }
@@ -77,6 +77,13 @@ function createLegendDiv(circleAdditionalClass, spanText) {
     return legend;
 }
 
+function createLegendWithCustomButton(className, text, handler) {
+    const legend = createDomElementWithOptions("div", "legend");
+    const button = createDomElementWithOptions("button", className, null, text, null ,text, handler);
+    legend.appendChild(button);
+    return legend;
+}
+
 function createInfoDiv() {
     const info = createDomElementWithOptions("div", "info");
     info.appendChild(createDomElementWithOptions("span", null, null, "Information"));
@@ -87,6 +94,7 @@ function createInfoDiv() {
 function createExplainDiv(startDate, endDate) {
     const explain = createDomElementWithOptions("div", "explain");
 
+    explain.appendChild(createLegendWithCustomButton("report", "Create report", createReportHandler));
     explain.appendChild(createLegendDiv("red", "Not done"));
     explain.appendChild(createLegendDiv("green", "Done"));
     explain.appendChild(createLegendDiv(null, `${startDate} - Date of start`));
@@ -97,6 +105,9 @@ function createExplainDiv(startDate, endDate) {
     return explain;
 }
 
+function createReportHandler(event) {
+    
+}
 
 function generateUniqId() {
     return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function (c) {
