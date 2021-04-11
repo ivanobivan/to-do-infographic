@@ -79,7 +79,7 @@ function createLegendDiv(circleAdditionalClass, spanText) {
 
 function createLegendWithCustomButton(className, text, handler) {
     const legend = createDomElementWithOptions("div", "legend");
-    const button = createDomElementWithOptions("button", className, null, text, null ,text, handler);
+    const button = createDomElementWithOptions("button", className, null, text, null, text, handler);
     legend.appendChild(button);
     return legend;
 }
@@ -106,7 +106,33 @@ function createExplainDiv(startDate, endDate) {
 }
 
 function createReportHandler(event) {
-    
+    debugger
+    const target = event.currentTarget;
+    const infographic = document.getElementById("infographic");
+    try {
+        const styles = fetch("https://to-do-infographic.vercel.app/public/css/infographic.css");
+        styles.then(res => {
+            return res.text();
+        }).then(style => {
+            const clone = infographic.cloneNode();
+            clone.style.cssText = style;
+            const content = clone.innerHTML;
+            const link = document.createElement('a');
+            link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`);
+            link.setAttribute("download", "infographic_report.html");
+
+            link.style.display = 'none';
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+
+            infographic.remove(css_content);
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function generateUniqId() {
