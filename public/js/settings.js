@@ -6,6 +6,35 @@ const t = window.TrelloPowerUp.iframe();
 //type settingsListElement = {name: string, id: string, checked: boolean};
 //model settings: {list: [settingsListElement], startDate: Date(), endDate: Date()}
 
+function setSettingsDateControlValueFromSelectedRange(event) {
+    const inputStartDate = document.getElementById("startDate");
+    const inputEndDate = document.getElementById("endDate");
+    if (inputStartDate && inputEndDate) {
+        const now = new Date();
+        const desired = new Date();
+        switch (event.value) {
+            case "DAY":
+                desired.setDate(now.getDate() - 1);
+                break;
+            case "WEEK":
+                desired.setDate(now.getDate() - 7);
+                break;
+            case "MONTH":
+                desired.setMonth(now.getMonth() - 1);
+                break;
+            case "YEAR":
+                desired.setFullYear(now.getFullYear() - 1);
+                break;
+            case "EMPTY":
+            default:
+                break
+        }
+        inputEndDate.value = now.toISOString().substring(0, 10);
+        inputStartDate.value = desired.toISOString().substring(0, 10);
+    }
+}
+
+
 /*  
  * save user defined data in the private board info
  * @param {ClickEvent} event

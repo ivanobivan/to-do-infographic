@@ -11,6 +11,16 @@
   <script src="./public/js/settings.js"></script>
   <form id="settings">
     <label>
+      Select a range
+      <select name="range" onchange="setSettingsDateControlValueFromSelectedRange(this)">
+        <option value="EMPTY" selected>---empty---</option>
+        <option value="DAY">Last day</option>
+        <option value="WEEK">Last week</option>
+        <option value="MONTH">Last month</option>
+        <option value="YEAR">Last year</option>
+      </select>
+    </label>
+    <label>
       Date of start:
       <input type="date" id="startDate" name="startDate" min="1970-01-01" value="1970-01-01"/>
     </label>
