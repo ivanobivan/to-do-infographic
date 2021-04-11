@@ -112,11 +112,7 @@ function createReportHandler(event) {
         styles.then(res => {
             return res.text();
         }).then(style => {
-            const clone = document.createElement("div");
-            clone.id = "infographic";
-            clone.style.cssText = style;
-            clone.innerHTML = infographic.innerHTML;
-            const content = clone.innerHTML;
+            const content = `<div><style>${style}</style><div id="infographic">${infographic.innerHTML}</div></div>`;
             const link = document.createElement('a');
             link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`);
             link.setAttribute("download", "infographic_report.html");
