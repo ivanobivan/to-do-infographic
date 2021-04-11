@@ -25,6 +25,11 @@ function setSettingsDateControlValueFromSelectedRange(event) {
             case "YEAR":
                 desired.setFullYear(now.getFullYear() - 1);
                 break;
+            case "BEGIN":
+                now.setMonth(11);
+                now.setDate(31);
+                desired.setMonth(0);
+                desired.setDate(1);
             case "EMPTY":
             default:
                 break
