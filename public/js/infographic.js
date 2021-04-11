@@ -106,16 +106,16 @@ function createExplainDiv(startDate, endDate) {
 }
 
 function createReportHandler(event) {
-    debugger
-    const target = event.currentTarget;
     const infographic = document.getElementById("infographic");
     try {
         const styles = fetch("https://to-do-infographic.vercel.app/public/css/infographic.css");
         styles.then(res => {
             return res.text();
         }).then(style => {
-            const clone = infographic.cloneNode();
+            const clone = document.createElement("div");
+            clone.id = "infographic";
             clone.style.cssText = style;
+            clone.innerHTML = infographic.innerHTML;
             const content = clone.innerHTML;
             const link = document.createElement('a');
             link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`);
@@ -127,8 +127,6 @@ function createReportHandler(event) {
             link.click();
 
             document.body.removeChild(link);
-
-            infographic.remove(css_content);
         });
     } catch (error) {
         console.error(error);
