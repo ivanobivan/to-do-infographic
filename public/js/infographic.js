@@ -1,5 +1,6 @@
 
 const SETTINGS_KEY = "SETTINGS_KEY";
+const PUBLIC_POWERUP_KEY = "33dc42205aa39aa0357bf09d91c66226";
 const PRIVATE_TOKEN_PATH = "PRIVATE_TOKEN_PATH";
 const BASE_URL = "https://trello.com/1/lists";
 
@@ -374,7 +375,7 @@ function getDataForInfographic(token, settings) {
             return new Promise((resolve, reject) => {
                 if (element.checked) {
                     headers.push(element.name);
-                    const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${process.env.PUBLIC_POWERUP_KEY}&token=${token}`;
+                    const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
                     fetch(requestUrl, { method: "GET" })
                         .then(function (res) {
                             return res.json();

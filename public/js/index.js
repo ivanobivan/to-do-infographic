@@ -1,5 +1,6 @@
 
 const SETTINGS_KEY = "SETTINGS_KEY";
+const PUBLIC_POWERUP_KEY = "33dc42205aa39aa0357bf09d91c66226";
 const PRIVATE_TOKEN_PATH = "PRIVATE_TOKEN_PATH";
 
 function showInfographic(t, options) {
@@ -47,7 +48,7 @@ window.TrelloPowerUp.initialize({
         return t.popup({
             title: 'Authorization',
             args: {
-                apiKey: process.env.PUBLIC_POWERUP_KEY,
+                apiKey: PUBLIC_POWERUP_KEY,
             },
             url: './authorize.html',
             height: 140,
