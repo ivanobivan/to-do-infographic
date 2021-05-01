@@ -94,7 +94,7 @@ function createInfoDiv() {
 function createExplainDiv(startDate, endDate) {
     const explain = createDomElementWithOptions("div", "explain");
 
-    explain.appendChild(createLegendWithCustomButton("report", "Create report", createReportHandler));
+    //explain.appendChild(createLegendWithCustomButton("report", "Create report", createReportHandler));
     explain.appendChild(createLegendDiv("red", "Not done"));
     explain.appendChild(createLegendDiv("green", "Done"));
     explain.appendChild(createLegendDiv(null, `${startDate} - Date of start`));
