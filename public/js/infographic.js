@@ -185,7 +185,7 @@ function onHeaderElementHandler(cardList, listName) {
         createDomElementWithOptions("div", null, null, `Percentage of completion: ${percentage} %`)
     );
     cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Card count in a day: ${completionVelocity}`)
+        createDomElementWithOptions("div", null, null, `Card count in a day: ${completionVelocity.toFixed(2)}`)
     );
 
     const footer = document.getElementsByTagName("footer")[0];
