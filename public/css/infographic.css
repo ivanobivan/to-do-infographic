@@ -148,6 +148,10 @@ body {
     flex-direction: column;
 }
 
+#infographic .explain .info #cardInformation > div {
+    margin: 5px 0;
+}
+
 #infographic .explain .legend {
     display: flex;
     margin: 10px 0 0 0;

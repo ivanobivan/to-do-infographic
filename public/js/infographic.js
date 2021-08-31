@@ -5,6 +5,15 @@ const PRIVATE_TOKEN_PATH = "PRIVATE_TOKEN_PATH";
 const BASE_URL = "https://trello.com/1/lists";
 
 const t = window.TrelloPowerUp.iframe();
+const DAY_COUNT_SINCE_YEAR_BEGIN = getDayNumberSinceYearBegin();
+
+function getDayNumberSinceYearBegin() {
+    const currentDate = new Date();
+    const firstDate = new Date(currentDate.getFullYear(), 0, 0);
+    const diff = (currentDate - firstDate) + ((firstDate.getTimezoneOffset() - currentDate.getTimezoneOffset()) * 60 * 1000);
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay);
+}
 
 function stub(message) {
     const placeHolder = document.getElementById("infographic");
@@ -162,6 +171,7 @@ function onHeaderElementHandler(cardList, listName) {
     const notNullCardList = cardList.filter(card => card !== null);
     const closedCardList = notNullCardList.filter(card => card.closed);
     const percentage = notNullCardList.length > 0 ? Math.round((closedCardList.length / notNullCardList.length) * 100) : 0;
+    const completionVelocity = closedCardList.length / DAY_COUNT_SINCE_YEAR_BEGIN;
     cardInformation.appendChild(
         createDomElementWithOptions("div", null, null, `Card count in list [${listName}]: ${notNullCardList.length}`)
     );
@@ -173,6 +183,9 @@ function onHeaderElementHandler(cardList, listName) {
     );
     cardInformation.appendChild(
         createDomElementWithOptions("div", null, null, `Percentage of completion: ${percentage} %`)
+    );
+    cardInformation.appendChild(
+        createDomElementWithOptions("div", null, null, `Card count in a day: ${completionVelocity} %`)
     );
 
     const footer = document.getElementsByTagName("footer")[0];
