@@ -40,6 +40,10 @@ function setSettingsDateControlValueFromSelectedRange(event) {
 }
 
 
+function getContentFromHtmlElement(htmlElement, parameter) {
+    return parameter ? htmlElement[parameter] : htmlElement.value;
+}
+
 /*  
  * save user defined data in the private board info
  * @param {ClickEvent} event
@@ -47,30 +51,22 @@ function setSettingsDateControlValueFromSelectedRange(event) {
 function save(event) {
 
     const form = document.getElementById("settings");
-
-    const formElements = form.elements;
-
+    const trList = form.querySelectorAll("#settings_list > tbody > tr");
+    const list = [];
+    trList.forEach(trElement => {
+        const select = getContentFromHtmlElement(trElement.querySelector(".list-period"), "selectedOptions");
+        list.push({
+            id: getContentFromHtmlElement(trElement.querySelector(".list-enable"), "id"),
+            checked: getContentFromHtmlElement(trElement.querySelector(".list-enable"), "checked"),
+            name: getContentFromHtmlElement(trElement.querySelector(".list-name"), "textContent"),
+            count: getContentFromHtmlElement(trElement.querySelector(".list-count")),
+            period: select[0].value
+        })
+    });
     const settings = {
-        startDate: null,
-        endDate: null,
-        list: []
-    }
-
-    for (let i = 0; i < formElements.length; i++) {
-        const input = formElements[i];
-        if (input.type === "submit") {
-            continue;
-        } else if (input.name === "startDate") {
-            settings.startDate = input.value;
-        } else if (input.name === "endDate") {
-            settings.endDate = input.value;
-        } else {
-            settings.list.push({
-                id: input.id,
-                checked: input.checked,
-                name: input.name
-            })
-        }
+        startDate: getContentFromHtmlElement(form.querySelector("#startDate")),
+        endDate: getContentFromHtmlElement(form.querySelector("#endDate")),
+        list
     }
 
     t.set("board", "private", SETTINGS_KEY, settings)
@@ -95,13 +91,14 @@ function wrapHtmlElementTr(htmlElement) {
     return td;
 }
 
-function getTimeSelectDomElement() {
+function getPeriodSelectDomElement() {
     const select = document.createElement("select");
-    select.name = "timeSelect";
+    select.className = "list-period";
     const list = ["day", "week", "month", "year"];
     select.append(...list.map(e => {
         const option = document.createElement("option");
         option.value = e;
+        option.textContent = e;
         return option;
     }));
     return select;
@@ -119,22 +116,23 @@ function renderSettings(placeHolder, list) {
         const checkboxLabel = document.createElement("label");
         checkboxLabel.textContent = element.name;
         checkboxLabel.htmlFor = element.id;
+        checkboxLabel.className = "list-name";
 
         const checkboxInput = document.createElement("input");
         checkboxInput.type = "checkbox";
         checkboxInput.checked = element.checked;
         checkboxInput.id = element.id;
-        checkboxInput.name = element.name;
+        checkboxInput.className = "list-enable";
 
-        const speedContainerInput = document.createElement("input");
-        speedContainerInput.type = "number";
-        speedContainerInput.name = "speedContainerInput";
+        const elementCountContainerInput = document.createElement("input");
+        elementCountContainerInput.type = "number";
+        elementCountContainerInput.className = "list-count";
 
         tr.append(
             wrapHtmlElementTr(checkboxLabel),
             wrapHtmlElementTr(checkboxInput),
-            wrapHtmlElementTr(speedContainerInput),
-            wrapHtmlElementTr(getTimeSelectDomElement())
+            wrapHtmlElementTr(elementCountContainerInput),
+            wrapHtmlElementTr(getPeriodSelectDomElement())
         );
 
         placeHolder.appendChild(tr);
