@@ -179,7 +179,7 @@ function onHeaderElementHandler(cardList, listName, listInfo) {
     const completionVelocity = closedCardList.length / DAY_COUNT_SINCE_YEAR_BEGIN;
     const {count, period} = listInfo;
     const countPeriod = Math.round(DAY_COUNT_SINCE_YEAR_BEGIN / DATE_MAP[period]);
-    const possibleValue = countPeriod * countPeriod;
+    const possibleValue = countPeriod * count;
     const difference = closedCardList.length - possibleValue;
     const speed = closedCardList.length / possibleValue;
     const infoList = [
@@ -222,7 +222,7 @@ function buildDomTree(data, settings) {
             header,
             "header",
             header,
-            () => onHeaderElementHandler(body[index], header, list.filter(e => e.name === header))
+            () => onHeaderElementHandler(body[index], header, list.find(e => e.name === header))
         )
     ));
 
