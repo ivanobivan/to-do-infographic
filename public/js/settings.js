@@ -1,4 +1,5 @@
 const SETTINGS_KEY = "SETTINGS_KEY";
+const SETTINGS_TABLE_SELECTOR = "#settings_list tbody";
 
 const t = window.TrelloPowerUp.iframe();
 
@@ -71,7 +72,6 @@ function save(event) {
             })
         }
     }
-    ;
 
     t.set("board", "private", SETTINGS_KEY, settings)
         .then(function () {
@@ -147,7 +147,7 @@ function renderSettings(placeHolder, list) {
 function prepareSettingsElement() {
     const settingDiv = document.getElementById("settings");
 
-    const settingListTable = document.getElementById("settings_list tbody");
+    const settingListTable = document.querySelector(SETTINGS_TABLE_SELECTOR);
 
     //event submit (mean save settings) pulls event rerender cos I should clean element list 
     settingListTable.innerHTML = "";
@@ -164,7 +164,7 @@ t.render(function () {
 
     prepareSettingsElement();
 
-    const settingListTable = document.getElementById("settings_list tbody");
+    const settingListTable = document.querySelector(SETTINGS_TABLE_SELECTOR);
 
     //get settings
     return t.lists("id", "name")
