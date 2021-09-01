@@ -22,6 +22,10 @@
     padding: 2px;
 }
 
+#settings #settings_list .list-count {
+    width: 50px
+}
+
 #settings #settings_list input[type="checkbox"] {
     float: left;
 }
