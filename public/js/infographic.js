@@ -189,10 +189,10 @@ function onHeaderElementHandler(cardList, listName, listInfo) {
         `Percentage of completion: ${percentage} %`,
         `Card count in a day: ${completionVelocity.toFixed(2)} (average)`,
         `Prefer ${count} element in a ${period} (by settings)`,
-        `Already spent from start of the year ${countPeriod} ${period}`,
-        `Could possible be: ${possibleValue}`,
-        `Difference: ${difference}`,
-        `Speed: ${speed.toFixed(2)}`
+        `Already spent from start of the year: ${countPeriod} ${period}`,
+        `Could possible be: ${possibleValue} elements`,
+        `Difference: ${difference} elements`,
+        `Speed: ${speed.toFixed(2)} in a ${period}`
     ];
     cardInformation.append(...infoList.map(info => createDomElementWithOptions("div", null, null, info)));
 

@@ -91,9 +91,10 @@ function wrapHtmlElementTr(htmlElement) {
     return td;
 }
 
-function getPeriodSelectDomElement() {
+function getPeriodSelectDomElement(period) {
     const select = document.createElement("select");
     select.className = "list-period";
+    select.value = period;
     const list = ["day", "week", "month", "year"];
     select.append(...list.map(e => {
         const option = document.createElement("option");
@@ -125,6 +126,7 @@ function renderSettings(placeHolder, list) {
         checkboxInput.className = "list-enable";
 
         const elementCountContainerInput = document.createElement("input");
+        elementCountContainerInput.value = element.count;
         elementCountContainerInput.type = "number";
         elementCountContainerInput.className = "list-count";
 
@@ -132,7 +134,7 @@ function renderSettings(placeHolder, list) {
             wrapHtmlElementTr(checkboxLabel),
             wrapHtmlElementTr(checkboxInput),
             wrapHtmlElementTr(elementCountContainerInput),
-            wrapHtmlElementTr(getPeriodSelectDomElement())
+            wrapHtmlElementTr(getPeriodSelectDomElement(element.period))
         );
 
         placeHolder.appendChild(tr);
