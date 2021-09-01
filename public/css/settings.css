@@ -17,6 +17,8 @@
 #settings #settings_list {
     display: flex;
     flex-direction: column;
+    gap: 4px 0;
+    font-size: 16px;
 }
 
 #settings #settings_list input[type="checkbox"] {

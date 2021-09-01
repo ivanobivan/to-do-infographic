@@ -1,4 +1,3 @@
-
 const SETTINGS_KEY = "SETTINGS_KEY";
 
 const t = window.TrelloPowerUp.iframe();
@@ -71,7 +70,8 @@ function save(event) {
                 name: input.name
             })
         }
-    };
+    }
+    ;
 
     t.set("board", "private", SETTINGS_KEY, settings)
         .then(function () {
@@ -89,6 +89,24 @@ function overrideSettingsDate(startDateValue, endDateValue) {
     endDate.value = endDateValue;
 }
 
+function wrapHtmlElementTr(htmlElement) {
+    const td = document.createElement("td");
+    td.append(htmlElement);
+    return td;
+}
+
+function getTimeSelectDomElement() {
+    const select = document.createElement("select");
+    select.name = "timeSelect";
+    const list = ["day", "week", "month", "year"];
+    select.append(...list.map(e => {
+        const option = document.createElement("option");
+        option.value = e;
+        return option;
+    }));
+    return select;
+}
+
 /* *
  * add list elements into settings placeholder
  * @param {HtmlDivElement} placeHolder - where shoud add dom elements
@@ -96,9 +114,11 @@ function overrideSettingsDate(startDateValue, endDateValue) {
  */
 function renderSettings(placeHolder, list) {
     list.forEach(element => {
+        const tr = document.createElement("tr");
 
         const checkboxLabel = document.createElement("label");
         checkboxLabel.textContent = element.name;
+        checkboxLabel.htmlFor = element.id;
 
         const checkboxInput = document.createElement("input");
         checkboxInput.type = "checkbox";
@@ -106,11 +126,20 @@ function renderSettings(placeHolder, list) {
         checkboxInput.id = element.id;
         checkboxInput.name = element.name;
 
-        checkboxLabel.appendChild(checkboxInput);
+        const speedContainerInput = document.createElement("input");
+        speedContainerInput.type = "number";
+        speedContainerInput.name = "speedContainerInput";
 
-        placeHolder.appendChild(checkboxLabel);
+        tr.append(
+            wrapHtmlElementTr(checkboxLabel),
+            wrapHtmlElementTr(checkboxInput),
+            wrapHtmlElementTr(speedContainerInput),
+            wrapHtmlElementTr(getTimeSelectDomElement())
+        );
+
+        placeHolder.appendChild(tr);
     });
-};
+}
 
 /* 
  * clean list element, set default end date value and resubscribe submit event
@@ -135,7 +164,7 @@ t.render(function () {
 
     prepareSettingsElement();
 
-    const settingListDiv = document.getElementById("settings_list");
+    const settingListDiv = document.getElementById("settings_list tbody");
 
     //get settings
     return t.lists("id", "name")
