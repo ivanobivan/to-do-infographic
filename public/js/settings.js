@@ -94,12 +94,12 @@ function wrapHtmlElementTr(htmlElement) {
 function getPeriodSelectDomElement(period) {
     const select = document.createElement("select");
     select.className = "list-period";
-    select.value = period;
     const list = ["day", "week", "month", "year"];
     select.append(...list.map(e => {
         const option = document.createElement("option");
         option.value = e;
         option.textContent = e;
+        option.selected = e === period;
         return option;
     }));
     return select;
