@@ -59,7 +59,7 @@ function save(event) {
             id: getContentFromHtmlElement(trElement.querySelector(".list-enable"), "id"),
             checked: getContentFromHtmlElement(trElement.querySelector(".list-enable"), "checked"),
             name: getContentFromHtmlElement(trElement.querySelector(".list-name"), "textContent"),
-            count: getContentFromHtmlElement(trElement.querySelector(".list-count")),
+            count: getContentFromHtmlElement(trElement.querySelector(".list-count")) || 0,
             period: select[0].value
         })
     });
