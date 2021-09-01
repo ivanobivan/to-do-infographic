@@ -147,10 +147,10 @@ function renderSettings(placeHolder, list) {
 function prepareSettingsElement() {
     const settingDiv = document.getElementById("settings");
 
-    const settingListDiv = document.getElementById("settings_list");
+    const settingListTable = document.getElementById("settings_list tbody");
 
     //event submit (mean save settings) pulls event rerender cos I should clean element list 
-    settingListDiv.innerHTML = "";
+    settingListTable.innerHTML = "";
 
     //set end date settings as current Date
     const endDate = document.getElementById("endDate");
@@ -164,7 +164,7 @@ t.render(function () {
 
     prepareSettingsElement();
 
-    const settingListDiv = document.getElementById("settings_list tbody");
+    const settingListTable = document.getElementById("settings_list tbody");
 
     //get settings
     return t.lists("id", "name")
@@ -175,7 +175,7 @@ t.render(function () {
                     if (settings) {
                         overrideSettingsDate(settings.startDate, settings.endDate);
                         if (settings.list.length === list.length) {
-                            return renderSettings(settingListDiv, settings.list);
+                            return renderSettings(settingListTable, settings.list);
                         } else {
                             //settings defined, but user list count updated, so merge it to one list
                             const mergedList = list.map(element => {
@@ -188,12 +188,12 @@ t.render(function () {
                                 }
 
                             });
-                            return renderSettings(settingListDiv, mergedList);
+                            return renderSettings(settingListTable, mergedList);
                         }
 
                     } else {
                         //settings doesn't exist
-                        return renderSettings(settingListDiv, list);
+                        return renderSettings(settingListTable, list);
                     }
                 })
         });
