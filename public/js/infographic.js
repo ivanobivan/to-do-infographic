@@ -1,11 +1,15 @@
-
 const SETTINGS_KEY = "SETTINGS_KEY";
 const PUBLIC_POWERUP_KEY = "33dc42205aa39aa0357bf09d91c66226";
 const PRIVATE_TOKEN_PATH = "PRIVATE_TOKEN_PATH";
 const BASE_URL = "https://trello.com/1/lists";
-
-const t = window.TrelloPowerUp.iframe();
 const DAY_COUNT_SINCE_YEAR_BEGIN = getDayNumberSinceYearBegin();
+const DATE_MAP = {
+    day: 1,
+    week: 7,
+    month: 30,
+    year: 365
+};
+const t = window.TrelloPowerUp.iframe();
 
 function getDayNumberSinceYearBegin() {
     const currentDate = new Date();
@@ -80,7 +84,8 @@ function createLegendDiv(circleAdditionalClass, spanText) {
         legend.appendChild(circle);
     }
     if (spanText) {
-        const span = createDomElementWithOptions("span", null, null, spanText);;
+        const span = createDomElementWithOptions("span", null, null, spanText);
+        ;
         legend.appendChild(span);
     }
     return legend;
@@ -166,27 +171,30 @@ function onClickListElementHandler(element) {
     }
 }
 
-function onHeaderElementHandler(cardList, listName) {
+function onHeaderElementHandler(cardList, listName, listInfo) {
     const cardInformation = getCardInformation();
     const notNullCardList = cardList.filter(card => card !== null);
     const closedCardList = notNullCardList.filter(card => card.closed);
     const percentage = notNullCardList.length > 0 ? Math.round((closedCardList.length / notNullCardList.length) * 100) : 0;
     const completionVelocity = closedCardList.length / DAY_COUNT_SINCE_YEAR_BEGIN;
-    cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Card count in list [${listName}]: ${notNullCardList.length}`)
-    );
-    cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Not done card count: ${notNullCardList.length - closedCardList.length}`)
-    );
-    cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Done card count: ${closedCardList.length}`)
-    );
-    cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Percentage of completion: ${percentage} %`)
-    );
-    cardInformation.appendChild(
-        createDomElementWithOptions("div", null, null, `Card count in a day: ${completionVelocity.toFixed(2)}`)
-    );
+    const {count, period} = listInfo;
+    const countPeriod = Math.round(DAY_COUNT_SINCE_YEAR_BEGIN / DATE_MAP[period]);
+    const possibleValue = countPeriod * countPeriod;
+    const difference = closedCardList.length - possibleValue;
+    const speed = closedCardList.length / possibleValue;
+    const infoList = [
+        `Card count in list [${listName}]: ${notNullCardList.length}`,
+        `Not done card count: ${notNullCardList.length - closedCardList.length}`,
+        `Done card count: ${closedCardList.length}`,
+        `Percentage of completion: ${percentage} %`,
+        `Card count in a day: ${completionVelocity.toFixed(2)} (average)`,
+        `Prefer ${count} element in a ${period} (by settings)`,
+        `Already spent from start of the year ${countPeriod} ${period}`,
+        `Could possible be: ${possibleValue}`,
+        `Difference: ${difference}`,
+        `Speed: ${speed.toFixed(2)}`
+    ];
+    cardInformation.append(...infoList.map(info => createDomElementWithOptions("div", null, null, info)));
 
     const footer = document.getElementsByTagName("footer")[0];
     if (percentage > 0 && percentage < 50) {
@@ -200,8 +208,8 @@ function onHeaderElementHandler(cardList, listName) {
 }
 
 function buildDomTree(data, settings) {
-    const { headers, body, max } = data;
-    const { startDate, endDate } = settings
+    const {headers, body, max} = data;
+    const {startDate, endDate, list} = settings
 
     const grid = [];
 
@@ -214,7 +222,7 @@ function buildDomTree(data, settings) {
             header,
             "header",
             header,
-            () => onHeaderElementHandler(body[index], header)
+            () => onHeaderElementHandler(body[index], header, list.filter(e => e.name === header))
         )
     ));
 
@@ -389,7 +397,7 @@ function getDataForInfographic(token, settings) {
                 if (element.checked) {
                     headers.push(element.name);
                     const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
-                    fetch(requestUrl, { method: "GET" })
+                    fetch(requestUrl, {method: "GET"})
                         .then(function (res) {
                             return res.json();
                         })
@@ -429,9 +437,9 @@ t.render(function () {
                                 .then(result => {
                                     buildDomTree(result, settings);
                                 }).catch(err => {
-                                    console.error(err);
-                                    stub(err.message);
-                                });
+                                console.error(err);
+                                stub(err.message);
+                            });
                         } else {
                             stub("Application settings aren't defined");
                         }
