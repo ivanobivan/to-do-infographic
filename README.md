@@ -7,8 +7,13 @@ Trello power-up application for demonstrate the completed tasks relative to all 
   - Show card information in separate window (name, last activity date)
   - Show list information in separate window (how many cards, how many completed)
 
-### how it looks like
+### how it looks like in common
   ![](resources/infographic.png)
+
+### what information about card and list can I see
+|Information|Picture|
+|---|---|
+|Information block contains data from you card list <br/> and some calculated values based on your settings| ![](resources/card-info.png)|
 
 ### what will be able to do
   - Perhaps the application will be hosted on the Trello platform 
