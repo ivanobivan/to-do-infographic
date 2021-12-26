@@ -30,7 +30,9 @@ function setSettingsDateControlValueFromSelectedRange(event) {
                 now.setDate(31);
                 desired.setMonth(0);
                 desired.setDate(1);
+                break;
             case "EMPTY":
+                break;
             default:
                 break
         }
