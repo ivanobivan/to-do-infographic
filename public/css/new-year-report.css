@@ -1,0 +1,38 @@
+:root {
+    --border: 1px solid rgba(0,0,0,0.2);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    margin-top: 20px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+main section {
+    text-align: center;
+}
+
+main section.cards {
+    display: grid;
+    grid-template-columns: 10px 1fr 1fr 1fr 10px;
+}
+
+main section card {
+    display: block;
+    padding: 15px;
+    margin: 15px;
+    border: var(--border);
+    border-radius: 5px;
+}
+
+main section card.big {
+}
+
+main section img.cup {
+    width: 100px;
+}

@@ -85,7 +85,6 @@ function createLegendDiv(circleAdditionalClass, spanText) {
     }
     if (spanText) {
         const span = createDomElementWithOptions("span", null, null, spanText);
-        ;
         legend.appendChild(span);
     }
     return legend;
@@ -108,7 +107,7 @@ function createInfoDiv() {
 function createExplainDiv(startDate, endDate) {
     const explain = createDomElementWithOptions("div", "explain");
 
-    //explain.appendChild(createLegendWithCustomButton("report", "Create report", createReportHandler));
+    explain.appendChild(createLegendWithCustomButton("report", "Create new year report", createReportHandler));
     explain.appendChild(createLegendDiv("red", "Not done"));
     explain.appendChild(createLegendDiv("green", "Done"));
     explain.appendChild(createLegendDiv(null, `${startDate} - Date of start`));
@@ -120,7 +119,8 @@ function createExplainDiv(startDate, endDate) {
 }
 
 function createReportHandler(event) {
-    const infographic = document.getElementById("infographic");
+    
+    /*const infographic = document.getElementById("infographic");
     try {
         const styles = fetch("https://to-do-infographic.vercel.app/public/css/infographic.css");
         styles.then(res => {
@@ -140,7 +140,7 @@ function createReportHandler(event) {
         });
     } catch (error) {
         console.error(error);
-    }
+    }*/
 }
 
 function generateUniqId() {
