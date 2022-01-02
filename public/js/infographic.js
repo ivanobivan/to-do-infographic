@@ -128,7 +128,7 @@ async function createReportHandler(event) {
         t.modal({
             url: './new-year-report.html',
             fullscreen: false,
-            callback: () => t.closeModal(),
+            callback: () => {console.log("123")},
             title: 'Новогодний отчет',
             args: {data, settings}
         });
