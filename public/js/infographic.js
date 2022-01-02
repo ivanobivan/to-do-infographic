@@ -123,42 +123,19 @@ async function createReportHandler(event) {
         debugger
         const token = await t.loadSecret(PRIVATE_TOKEN_PATH);
         const settings = await t.get("board", "private", SETTINGS_KEY)
-        const result = await getDataForInfographic(token, settings);
+        const data = await getDataForInfographic(token, settings);
 
-        const { headers, body, max } = data;
-        const { startDate, endDate, list } = settings
-
-        const year = new Date().getFullYear();
-
+        t.modal({
+            url: './new-year-report.html',
+            fullscreen: true,
+            callback: () => t.closeModal(),
+            title: 'Новогодний отчет',
+            args: {data, settings}
+        });
 
     } catch (err) {
         console.error(err)
     }
-
-
-
-
-    /*const infographic = document.getElementById("infographic");
-    try {
-        const styles = fetch("https://to-do-infographic.vercel.app/public/css/infographic.css");
-        styles.then(res => {
-            return res.text();
-        }).then(style => {
-            const content = `<div><style>${style}</style><div id="infographic">${infographic.innerHTML}</div></div>`;
-            const link = document.createElement('a');
-            link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`);
-            link.setAttribute("download", "infographic_report.html");
-
-            link.style.display = 'none';
-            document.body.appendChild(link);
-
-            link.click();
-
-            document.body.removeChild(link);
-        });
-    } catch (error) {
-        console.error(error);
-    }*/
 }
 
 function generateUniqId() {
