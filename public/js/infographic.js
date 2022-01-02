@@ -118,8 +118,26 @@ function createExplainDiv(startDate, endDate) {
     return explain;
 }
 
-function createReportHandler(event) {
-    
+async function createReportHandler(event) {
+    try {
+        debugger
+        const token = await t.loadSecret(PRIVATE_TOKEN_PATH);
+        const settings = await t.get("board", "private", SETTINGS_KEY)
+        const result = await getDataForInfographic(token, settings);
+
+        const { headers, body, max } = data;
+        const { startDate, endDate, list } = settings
+
+        const year = new Date().getFullYear();
+
+
+    } catch (err) {
+        console.error(err)
+    }
+
+
+
+
     /*const infographic = document.getElementById("infographic");
     try {
         const styles = fetch("https://to-do-infographic.vercel.app/public/css/infographic.css");
@@ -144,8 +162,9 @@ function createReportHandler(event) {
 }
 
 function generateUniqId() {
-    return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }
@@ -177,7 +196,7 @@ function onHeaderElementHandler(cardList, listName, listInfo) {
     const closedCardList = notNullCardList.filter(card => card.closed);
     const percentage = notNullCardList.length > 0 ? Math.round((closedCardList.length / notNullCardList.length) * 100) : 0;
     const completionVelocity = closedCardList.length / DAY_COUNT_SINCE_YEAR_BEGIN;
-    const {count, period} = listInfo;
+    const { count, period } = listInfo;
     const countPeriod = Math.round(DAY_COUNT_SINCE_YEAR_BEGIN / DATE_MAP[period]);
     const possibleValue = countPeriod * count;
     const difference = closedCardList.length - possibleValue;
@@ -208,8 +227,8 @@ function onHeaderElementHandler(cardList, listName, listInfo) {
 }
 
 function buildDomTree(data, settings) {
-    const {headers, body, max} = data;
-    const {startDate, endDate, list} = settings
+    const { headers, body, max } = data;
+    const { startDate, endDate, list } = settings
 
     const grid = [];
 
@@ -397,18 +416,18 @@ function getDataForInfographic(token, settings) {
                 if (element.checked) {
                     headers.push(element.name);
                     const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
-                    fetch(requestUrl, {method: "GET"})
-                        .then(function (res) {
+                    fetch(requestUrl, { method: "GET" })
+                        .then(function(res) {
                             return res.json();
                         })
-                        .then(function (cardList) {
+                        .then(function(cardList) {
                             const filteredList = filterData(cardList, settings.startDate, settings.endDate);
                             if (filteredList.length > MAX_CARD_COUNT) {
                                 MAX_CARD_COUNT = filteredList.length;
                             }
                             resolve(filteredList);
                         })
-                        .catch(function (err) {
+                        .catch(function(err) {
                             reject(err);
                         })
                 } else {
@@ -425,21 +444,21 @@ function getDataForInfographic(token, settings) {
     });
 }
 
-t.render(function () {
+t.render(function() {
     clean();
     t.loadSecret(PRIVATE_TOKEN_PATH)
-        .then(function (token) {
+        .then(function(token) {
             if (token) {
                 t.get("board", "private", SETTINGS_KEY)
-                    .then(function (settings) {
+                    .then(function(settings) {
                         if (settings) {
                             getDataForInfographic(token, settings)
                                 .then(result => {
                                     buildDomTree(result, settings);
                                 }).catch(err => {
-                                console.error(err);
-                                stub(err.message);
-                            });
+                                    console.error(err);
+                                    stub(err.message);
+                                });
                         } else {
                             stub("Application settings aren't defined");
                         }
@@ -450,13 +469,13 @@ t.render(function () {
         });
 });
 
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function(e) {
     if (e.target.tagName == 'BODY') {
         t.closeOverlay().done();
     }
 });
 
-document.addEventListener('keyup', function (e) {
+document.addEventListener('keyup', function(e) {
     if (e.keyCode == 27) {
         t.closeOverlay().done();
     }
