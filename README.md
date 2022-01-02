@@ -16,7 +16,7 @@ Trello power-up application for demonstrate the completed tasks relative to all 
 |Information block contains data from you card list <br/> and some calculated values based on your settings| ![](resources/card-info.png)|
 
 ### Can create pretty report .html for you by whole year perion, example new year report
-  ![](resources/new-year-report.png)
+  ![](resources/new-year.png)
 
 ### what will be able to do
   - Perhaps the application will be hosted on the Trello platform 
