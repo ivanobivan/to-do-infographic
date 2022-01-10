@@ -204,15 +204,12 @@ function reportDataPreparation(data, settings) {
             const div = document.createElement("div");
             div.className = "card";
 
-            div.onmouseover = (event) => {
-                event.target.style.cssText = "transform: scale(1.2); opacity: 1";
-            };
-
-            div.onmouseout = (event) => {
-                event.target.style.cssText = "transform: scale(1); opacity: 0.7";
-            };
-
-            div.innerText = `${card.name}\n${new Date(card.date).toDateString()}`;
+            div.innerText = `${card.name}\n${new Date(card.date).toLocaleDateString("ru-RU", {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            })}`;
 
             container.append(div);
         }
