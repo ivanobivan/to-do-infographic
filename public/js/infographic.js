@@ -123,19 +123,21 @@ async function createReportHandler(event) {
         const token = await t.loadSecret(PRIVATE_TOKEN_PATH);
         const settings = await t.get("board", "private", SETTINGS_KEY)
         const data = await getDataForInfographic(token, settings, true);
+        const newYearTemplateCss = await fetch("https://to-do-infographic.vercel.app/public/css/new-year-report.css");
+        const cssText = await newYearTemplateCss.text();
         debugger
 
         const node = reportDataPreparation(data, settings);
-        const tab = window.open("https://to-do-infographic.vercel.app/new-year-report.html");
+        const tab = window.open();
         if (tab) {
-            tab.document.write(getNewYearTemplate(node));
+            tab.document.write(getNewYearTemplate(node, cssText));
         }
     } catch (err) {
         console.error(err)
     }
 }
 
-function getNewYearTemplate(node) {
+function getNewYearTemplate(node, style) {
     return `<!doctype html>
             <html lang="ru">
             <head>
@@ -143,9 +145,8 @@ function getNewYearTemplate(node) {
                 <meta lang="ru">
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <link rel="stylesheet" href="public/css/new-year-report.css">
             </head>
-            <body><main>${node.innerHTML}</main></body>
+            <body><style>${style}</style><main>${node.innerHTML}</main></body>
             </html>`;
 }
 
