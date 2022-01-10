@@ -2,10 +2,6 @@
     --border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-@font-face {
-    font-family: "Basic";
-    src: url("../font/Basic.otf");
-}
 
 * {
     box-sizing: border-box;
@@ -17,7 +13,7 @@ body {
 }
 
 main {
-    font-family: "Basic", serif;
+    font-family: "Verdana", "sans-serif";
     font-size: 2rem;
     margin-top: 20px;
     display: grid;
@@ -80,4 +76,8 @@ main section.container .card {
     width: fit-content;
     opacity: 0.7;
     transition: opacity, transform 300ms;
+}
+main section.container .card:hover {
+    opacity: 1;
+    transform: scale(1.1)
 }

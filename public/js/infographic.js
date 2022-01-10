@@ -125,7 +125,6 @@ async function createReportHandler(event) {
         const data = await getDataForInfographic(token, settings, true);
         const newYearTemplateCss = await fetch("https://to-do-infographic.vercel.app/public/css/new-year-report.css");
         const cssText = await newYearTemplateCss.text();
-        debugger
 
         const node = reportDataPreparation(data, settings);
         const tab = window.open();
