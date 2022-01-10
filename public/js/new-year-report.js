@@ -81,8 +81,8 @@ const main = () => {
 }
 
 const setYear = () => {
-    const yeadNode = document.getElementById("year");
-    yeadNode.innerText = `ИТОГИ ГОДА 2021`;
+    const yearNode = document.getElementById("year");
+    yearNode.innerText = `ИТОГИ ГОДА 2021`;
 }
 
 main();

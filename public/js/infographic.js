@@ -125,6 +125,8 @@ async function createReportHandler(event) {
         const settings = await t.get("board", "private", SETTINGS_KEY)
         const data = await getDataForInfographic(token, settings);
 
+        t.closeModal();
+
         t.modal({
             url: './new-year-report.html',
             fullscreen: false,
