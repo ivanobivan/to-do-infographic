@@ -145,7 +145,7 @@ function getNewYearTemplate(node) {
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href="public/css/new-year-report.css">
             </head>
-            <body>${node.innerHTML}</body>
+            <body><main>${node.innerHTML}</main></body>
             </html>`;
 }
 
