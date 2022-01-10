@@ -122,27 +122,67 @@ async function createReportHandler(event) {
     try {
         const token = await t.loadSecret(PRIVATE_TOKEN_PATH);
         const settings = await t.get("board", "private", SETTINGS_KEY)
-        const data = await getDataForInfographic(token, settings);
+        const data = await getDataForInfographic(token, settings, true);
         debugger
 
-        const nodeList = reportDataPreparation(data, settings);
+        const node = reportDataPreparation(data, settings);
         const tab = window.open("https://to-do-infographic.vercel.app/new-year-report.html");
-        if(tab) {
-            const main = tab.document.querySelector("main");
-            if(main) {
-                main.append(...nodeList);
-            }
+        if (tab) {
+            tab.document.write(getNewYearTemplate(node));
         }
     } catch (err) {
         console.error(err)
     }
 }
 
-function reportDataPreparation(data, settings) {
-    const { headers, body } = data;
-    const { startDate, endDate, list } = settings;
+function getNewYearTemplate(node) {
+    return `<!doctype html>
+            <html lang="ru">
+            <head>
+                <title>Новогодний отчет</title>
+                <meta lang="ru">
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="public/css/new-year-report.css">
+            </head>
+            <body>${node.innerHTML}</body>
+            </html>`;
+}
 
-    const resultList = [];
+function reportDataPreparation(data, settings) {
+    const {headers, body} = data;
+    const {startDate, endDate, list} = settings;
+
+    const main = document.createElement("main");
+
+    const headerSection = document.createElement("section");
+    headerSection.className = "main-header";
+
+    const bottleImg = document.createElement("img");
+    bottleImg.src = "./public/img/bottle.png";
+
+    const headerBlock = document.createElement("div");
+
+    const h1 = document.createElement("h1");
+    h1.textContent = "ИТОГИ ГОДА 2021";
+
+    const h4 = document.createElement("h4");
+    h4.textContent = "Чего вы добились за прошедший год";
+
+    const p = document.createElement("p");
+    p.textContent = "Выборка строилась на основе ваших карточек и списков";
+
+    headerBlock.append(h1, h4, p);
+    headerSection.append(bottleImg, headerBlock, bottleImg.cloneNode());
+
+    const subHeaderSection = document.createElement("section");
+
+    const subh4 = document.createElement("h4")
+    subh4.textContent = "Вы отлично потрудились за этот год, вот каких результатов вы добились";
+
+    subHeaderSection.append(subh4);
+
+    main.append(headerSection, subHeaderSection);
 
     headers.forEach((header, i) => {
         const section = document.createElement("section");
@@ -207,14 +247,14 @@ function reportDataPreparation(data, settings) {
         imgContainer.append(img, img.cloneNode());
 
         section.append(headerNode, imgContainerTop, sumNode, container, imgContainer);
-        resultList.push(section);
+        main.append(section);
     });
 
-    return resultList;
+    return main;
 }
 
 function generateUniqId() {
-    return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function(c) {
+    return 'yxxxxxxxyxxxyxxxyxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0,
             v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
@@ -248,7 +288,7 @@ function onHeaderElementHandler(cardList, listName, listInfo) {
     const closedCardList = notNullCardList.filter(card => card.closed);
     const percentage = notNullCardList.length > 0 ? Math.round((closedCardList.length / notNullCardList.length) * 100) : 0;
     const completionVelocity = closedCardList.length / DAY_COUNT_SINCE_YEAR_BEGIN;
-    const { count, period } = listInfo;
+    const {count, period} = listInfo;
     const countPeriod = Math.round(DAY_COUNT_SINCE_YEAR_BEGIN / DATE_MAP[period]);
     const possibleValue = countPeriod * count;
     const difference = closedCardList.length - possibleValue;
@@ -279,8 +319,8 @@ function onHeaderElementHandler(cardList, listName, listInfo) {
 }
 
 function buildDomTree(data, settings) {
-    const { headers, body, max } = data;
-    const { startDate, endDate, list } = settings
+    const {headers, body, max} = data;
+    const {startDate, endDate, list} = settings
 
     const grid = [];
 
@@ -452,8 +492,10 @@ function filterData(cardList, startDate, endDate) {
         });
 }
 
-function getDataForInfographic(token, settings) {
-    loading();
+function getDataForInfographic(token, settings, withoutLoadingInd) {
+    if (!withoutLoadingInd) {
+        loading();
+    }
 
     //what max card count it could get from all lists
     let MAX_CARD_COUNT = 0;
@@ -468,18 +510,18 @@ function getDataForInfographic(token, settings) {
                 if (element.checked) {
                     headers.push(element.name);
                     const requestUrl = `${BASE_URL}/${element.id}/cards/all?key=${PUBLIC_POWERUP_KEY}&token=${token}`;
-                    fetch(requestUrl, { method: "GET" })
-                        .then(function(res) {
+                    fetch(requestUrl, {method: "GET"})
+                        .then(function (res) {
                             return res.json();
                         })
-                        .then(function(cardList) {
+                        .then(function (cardList) {
                             const filteredList = filterData(cardList, settings.startDate, settings.endDate);
                             if (filteredList.length > MAX_CARD_COUNT) {
                                 MAX_CARD_COUNT = filteredList.length;
                             }
                             resolve(filteredList);
                         })
-                        .catch(function(err) {
+                        .catch(function (err) {
                             reject(err);
                         })
                 } else {
@@ -496,21 +538,21 @@ function getDataForInfographic(token, settings) {
     });
 }
 
-t.render(function() {
+t.render(function () {
     clean();
     t.loadSecret(PRIVATE_TOKEN_PATH)
-        .then(function(token) {
+        .then(function (token) {
             if (token) {
                 t.get("board", "private", SETTINGS_KEY)
-                    .then(function(settings) {
+                    .then(function (settings) {
                         if (settings) {
-                            getDataForInfographic(token, settings)
+                            getDataForInfographic(token, settings, false)
                                 .then(result => {
                                     buildDomTree(result, settings);
                                 }).catch(err => {
-                                    console.error(err);
-                                    stub(err.message);
-                                });
+                                console.error(err);
+                                stub(err.message);
+                            });
                         } else {
                             stub("Application settings aren't defined");
                         }
@@ -521,13 +563,13 @@ t.render(function() {
         });
 });
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     if (e.target.tagName == 'BODY') {
         t.closeOverlay().done();
     }
 });
 
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if (e.keyCode == 27) {
         t.closeOverlay().done();
     }
