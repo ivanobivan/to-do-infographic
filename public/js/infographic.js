@@ -164,23 +164,18 @@ function reportDataPreparation(data, settings) {
     const headerBlock = document.createElement("div");
 
     const h1 = document.createElement("h1");
-    h1.textContent = "ИТОГИ ГОДА 2021";
+    h1.textContent = "ИТОГИ ПРОШЕДШЕГО ГОДА";
 
     const h4 = document.createElement("h4");
-    h4.textContent = "Чего вы добились за прошедший год";
+    h4.textContent = "Наглядно показываю, чего вы добились за прошедший год";
 
     const p = document.createElement("p");
-    p.textContent = "Выборка строилась на основе ваших карточек и списков";
+    p.textContent = "Выборка на основе ваших карточек и списков";
 
     headerBlock.append(h1, h4, p);
     headerSection.append(bottleImg, headerBlock, bottleImg.cloneNode());
 
     const subHeaderSection = document.createElement("section");
-
-    const subh4 = document.createElement("h4")
-    subh4.textContent = "Вы отлично потрудились за этот год, вот каких результатов вы добились";
-
-    subHeaderSection.append(subh4);
 
     main.append(headerSection, subHeaderSection);
 

@@ -51,8 +51,8 @@ main section.container .sum {
 }
 
 main section.container .card-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 550px);
     justify-content: space-around;
     gap: 15px;
 }
@@ -72,12 +72,12 @@ main section.container .card {
     border: var(--border);
     border-radius: 5px;
     font-size: 1.5rem;
-    padding: 20px;
-    width: fit-content;
-    opacity: 0.7;
-    transition: opacity, transform 300ms;
+    padding: 20px 0;
+    transition: background-color 300ms, transform 300ms, box-shadow 300ms linear;
+    background-color: white;
 }
 main section.container .card:hover {
-    opacity: 1;
-    transform: scale(1.1)
+    background-color: #00D587;
+    transform: scale(1.1);
+    box-shadow: 0 3px 3px 3px rgba(0,0,0,0.2);
 }
