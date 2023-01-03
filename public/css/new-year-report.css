@@ -30,6 +30,10 @@ main section.main-header {
     grid-template-columns: 1fr 4fr 1fr;
 }
 
+main section.main-header .paragraph-info {
+    white-space: pre-wrap;
+}
+
 main section.main-header img:last-child {
     transform: scale(-1, 1)
 }
