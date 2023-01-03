@@ -172,7 +172,14 @@ function reportDataPreparation(data, settings) {
     const p = document.createElement("p");
     p.textContent = "Выборка на основе ваших карточек и списков";
 
-    headerBlock.append(h1, h4, p);
+    const infoP = document.createElement("p");
+    infoP.className = "paragraph-info";
+    infoDiv.textContent = headers.reduce((res, header, i) => {
+        res += `${header} - ${cardList[i]?.length} элементов<br/>`;
+        return res;
+    }, "Общий результат<br/>");
+
+    headerBlock.append(h1, h4, p, infoDiv);
     headerSection.append(bottleImg, headerBlock, bottleImg.cloneNode());
 
     const subHeaderSection = document.createElement("section");
