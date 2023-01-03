@@ -175,7 +175,7 @@ function reportDataPreparation(data, settings) {
     const infoP = document.createElement("p");
     infoP.className = "paragraph-info";
     infoP.textContent = headers.reduce((res, header, i) => {
-        res += `${header} - ${cardList[i]?.length} элементов<br/>`;
+        res += `${header} - ${body[i]?.length} элементов<br/>`;
         return res;
     }, "Общий результат<br/>");
 
