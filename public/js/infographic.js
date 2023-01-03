@@ -174,12 +174,12 @@ function reportDataPreparation(data, settings) {
 
     const infoP = document.createElement("p");
     infoP.className = "paragraph-info";
-    infoDiv.textContent = headers.reduce((res, header, i) => {
+    infoP.textContent = headers.reduce((res, header, i) => {
         res += `${header} - ${cardList[i]?.length} элементов<br/>`;
         return res;
     }, "Общий результат<br/>");
 
-    headerBlock.append(h1, h4, p, infoDiv);
+    headerBlock.append(h1, h4, p, infoP);
     headerSection.append(bottleImg, headerBlock, bottleImg.cloneNode());
 
     const subHeaderSection = document.createElement("section");
